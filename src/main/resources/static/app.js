@@ -21,7 +21,7 @@ function connect() {
         setConnected(true);
         console.log('Connected: ' + frame);
         stompClient.subscribe('/subscription/room', function (message) {
-            showGreeting(JSON.parse(message.body));
+            showMessage(JSON.parse(message.body));
         });
         stompClient.subscribe('/welcome/onlineUsers', function (message) {
             handleOnlineUsers(JSON.parse(message.body));
@@ -34,6 +34,8 @@ function connect() {
 
 function disconnect() {
     if (stompClient != null) {
+        stompClient.send("/backend-point/deleteUser", {}, JSON.stringify({'message': $("#message").val()}));
+
         stompClient.disconnect();
     }
     setConnected(false);
@@ -41,26 +43,25 @@ function disconnect() {
 }
 
 function sendMessage() {
-
     stompClient.send("/backend-point/chat", {}, JSON.stringify({'message': $("#message").val()}));
     $("#message").val("");
 }
 
-function showGreeting(message) {
+function showMessage(message) {
     console.log("herre");
     console.log(message);
     console.log("herre");
     $("#room").append("<tr><td>" + message.from + "</td> <td>" + message.message +"</td></tr>");
 }
 
-function handleOnlineUsers(message){
+function handleOnlineUsers(onlineUsers){
     $("#online tr").remove();
     console.log("handle online users");
-    var users = message.onlineUsers;
-    console.log(users);
+    // var users = message.onlineUsers;
+    console.log(onlineUsers);
     console.log("/handle online users");
-    for(var i in users){
-        $("#online").append("<tr><td>" + users[i]  + "</td></tr>");
+    for(var key in onlineUsers){
+        $("#online").append("<tr><td>" + onlineUsers[key]  + "</td></tr>");
     }
 
 }
