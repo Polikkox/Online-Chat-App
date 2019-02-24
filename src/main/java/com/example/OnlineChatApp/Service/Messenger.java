@@ -28,4 +28,10 @@ public class Messenger {
             simpMessagingTemplate.convertAndSend(url, message);
         }
     }
+
+    public void pushInfoImpl(String url, String message) {
+        if (simpMessagingTemplate != null) {
+            simpMessagingTemplate.convertAndSend(url, message);
+        }
+    }
 }
