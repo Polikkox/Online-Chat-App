@@ -14,8 +14,4 @@ public class WebController {
 	public Message pushMessage(Message message, Principal principal) throws Exception {
 		return new Message(message.getMessage(), principal.getName());
 	}
-
-
-
-
 }
