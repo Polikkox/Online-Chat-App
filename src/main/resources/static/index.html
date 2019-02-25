@@ -23,18 +23,9 @@
                 </div>
             </form>
         </div>
-        <div class="col-lg-8">
-            <form class="form-inline">
-                <div class="form-group">
-                    <label for="message">Type message:</label>
-                    <input type="text" id="message" class="form-control">
-                </div>
-                <button id="send" class="btn btn-success" type="submit">Send</button>
-            </form>
-        </div>
     </div>
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-6 text-row">
             <table id="conversation" class="table table-striped">
                 <thead>
                 <tr>
@@ -55,6 +46,17 @@
                 <tbody id="online">
             </table>
         </span></div>
+    </div>
+    <div class="row input-field">
+        <div class="col-lg-12">
+            <form class="form-inline text-area">
+                <div class="form-group">
+                    <label for="message">Type message:</label><p></p>
+                    <textarea id="message" class="form-control"></textarea>
+                </div>
+                <button id="send" class="btn btn-primary" type="submit">Send</button><p></p>
+            </form>
+        </div>
     </div>
 </div>
 </body>

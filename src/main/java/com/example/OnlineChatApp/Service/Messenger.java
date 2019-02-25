@@ -34,4 +34,10 @@ public class Messenger {
             simpMessagingTemplate.convertAndSend(url, message);
         }
     }
+
+    public void pushInfoToUser(String name, String url, Message message) {
+        if (simpMessagingTemplate != null) {
+            simpMessagingTemplate.convertAndSendToUser(name, url, message);
+        }
+    }
 }

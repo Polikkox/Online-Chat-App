@@ -25,6 +25,15 @@ public class LoggedUserHandler {
         return this.onlineUsersMap.get(sessionID);
     }
 
+    public String getOnlineUserByNick(String name) {
+        for(Map.Entry<String,String> items : this.getOnlineUsers().entrySet()){
+            if(items.getValue().equals(name)){
+                return items.getKey();
+            }
+        }
+        return null;
+    }
+
     public void removeUserByUserName(String name){
         this.onlineUsersMap.values().remove(name);
     }

@@ -1,3 +1,19 @@
 .title-online-users{
     background-color: steelblue;
 }
+.text-row{
+    max-height:57vh;
+    overflow-y:scroll;
+}
+.input-field{
+    position: fixed;
+    bottom: 0;
+}
+#message{
+    width: 88vh;
+    height: 30vh;
+}
+#send{
+    position: fixed;
+    bottom: 2vh;
+}
