@@ -1,9 +1,9 @@
-
 var stompClient = null;
 var stompClient3 = null;
 var reconnect = false;
 var stomp1 = null;
 let session = null;
+var name = null;
 function setConnected(connected) {
     $("#connect").prop("disabled", connected);
     $("#disconnect").prop("disabled", !connected);
@@ -36,10 +36,6 @@ function connect() {
         });
 
         stompClient.send("/backend-point/getUsers", {});
-
-
-
-
     });
 }
 
@@ -57,8 +53,6 @@ function subscribeSession() {
     stompClient.subscribe('/subscription/getSession', function (message) {
         session = JSON.stringify(message.body);
         session = JSON.parse(session);
-        console.log("sssssss" + session);
-
     });
     stompClient.send("/backend-point/add-session", {});
 }
@@ -84,9 +78,11 @@ function sendMessage() {
 }
 
 function showMessage(message) {
-    console.log("here");
-    console.log(message);
-    $("#room").append("<tr><td>" + message.from + "</td> <td>" + message.message +"</td></tr>");
+    $("#copyGlobalDiv").append("<tr><td>" + message.from + "</td> <td>" + message.message +"</td></tr>");
+    updateScroll();
+}
+function showMessage2(message) {
+    $("#copyGlobalDiv" + message.from).append("<tr><td>" + message.from + "</td> <td>" + message.message +"</td></tr>");
     updateScroll();
 }
 
@@ -96,16 +92,52 @@ function handleOnlineUsers(onlineUsers){
     for(let key in onlineUsers) {
         $("#online").append("<tr><td id=" + onlineUsers[key] + ">" + onlineUsers[key] + "</td.atrr></tr>");
         $("#" + onlineUsers[key]).click(
-           function () { sendPersonalMessage((onlineUsers[key]))
+           function () {
+               sendPersonalMessage((onlineUsers[key]));
+               addUsersOnlineDiv(onlineUsers[key]);
+               addGlobalChatListener();
            }
        )
     }
 }
 
+function addUsersOnlineDiv(onlineUsers) {
+
+    if($("#copydiv" + onlineUsers).length === 0){
+        let $clone = $(".copy-div").last().clone();
+        $clone.attr('id', 'copydiv' + onlineUsers);
+        $clone.html(onlineUsers);
+        $clone.appendTo($(".row1"));
+        addUsersMessageField($clone, onlineUsers);
+    }
+
+}
+function addUsersMessageField(user, name) {
+    prepareMessagesDiv(name);
+    user.click(
+        () => {
+            $(".copyGlobal").addClass('not-visible');
+            $(".copyGlobal" + name).removeClass('not-visible');
+        }
+    );
+}
+
+function prepareMessagesDiv(name) {
+
+    let $clone = $(".copyGlobal").first().clone();
+    $clone.addClass('copyGlobal' + name +' col-lg-6 not-visible');
+    $clone.find('tbody').html("");
+    $clone.find('.tbodyClass').attr('id', 'copyGlobalDiv' + name);
+    $clone.appendTo($('.global'));
+}
+
 function sendPersonalMessage(message1){
+
     $("#send").unbind();
     $("#send").click(function() {
         stompClient.send("/backend-point/personal-chat", {}, JSON.stringify({'from': message1, 'message': $("#message").val()}));
+        var mesg = {from: message1, message: $("#message").val()};
+        showMessage2(JSON.parse(JSON.stringify(mesg)));
         $("#message").val("");
     });
 
@@ -146,11 +178,20 @@ function handleClientConnection() {
 
 function dealWithSession(){
     stompClient.subscribe('/subscription/' + session, function (message) {
-        showMessage(JSON.parse(message.body));
+        showMessage2(JSON.parse(message.body));
     });
 }
 
 
 function updateScroll(){
-    $('.text-row').scrollTop($('.text-row')[0].scrollHeight);
+    $('.text-row').scrollTop();
+}
+
+function addGlobalChatListener() {
+    $("#copy-global-id").click(
+        function () {
+            $(".copyGlobal").addClass('not-visible');
+            $("#copy-id").removeClass('not-visible');
+        }
+    );
 }

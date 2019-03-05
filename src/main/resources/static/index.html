@@ -2,16 +2,16 @@
 <html>
 <head>
     <title>Spring Boot WebSocket!</title>
-    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/main.css" rel="stylesheet">
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">    <link href="/main.css" rel="stylesheet">
     <script src="/webjars/jquery/jquery.min.js"></script>
     <script src="/webjars/sockjs-client/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
     <script src="/app.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
+
 </head>
 <body>
-<div class="container">
+<div class="container testimonial-group">
     <div class="row">
         <div class="col-md-4">
             <form class="form-inline">
@@ -24,17 +24,33 @@
             </form>
         </div>
     </div>
+    <div class="row row1">
+        <div class="col-sm-3 border copy-div">
+            <form class="form-inline">
+                <div class="form-group">
+                   <div class="address" id="copy-global-id">Global
+                   </div>
+                </div>
+            </form>
+        </div>
+    </div>
     <div class="row">
-        <div class="col-lg-6 text-row">
-            <table id="conversation" class="table table-striped">
-                <thead>
-                <tr>
-                    <th>From:</th>
-                    <th>Message</th>
-                </tr>
-                </thead>
-                <tbody id="room">
-            </table>
+        <div class="global">
+            <div class="col-lg-6 copyGlobal setSize global-main" id="copy-id">
+                <div class="row">
+                    <div class="col-lg-9 text-row">
+                        <table id="conversation" class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>From:</th>
+                                <th>Message</th>
+                            </tr>
+                            </thead>
+                            <tbody class="tbodyClass" id="copyGlobalDiv">
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-md-4"><span class="pull-right">
             <table id="online-users" class="table table-striped title-online-users">

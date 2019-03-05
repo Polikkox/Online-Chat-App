@@ -1,9 +1,15 @@
 .title-online-users{
     background-color: steelblue;
 }
+
 .text-row{
     max-height:57vh;
     overflow-y:scroll;
+
+}
+.row1{
+    max-width: 400px;
+
 }
 .input-field{
     position: fixed;
@@ -17,3 +23,44 @@
     position: fixed;
     bottom: 2vh;
 }
+
+.testimonial-group > .row1 {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+.testimonial-group > .row1 > .col-sm-3 {
+    display: inline-block;
+    float: none;
+}
+.border{
+    border-style: solid;
+    border-width: 3px;
+}
+.address{
+    width: 30%;
+}
+.not-visible{
+    display: none;
+}
+/*.set-size{*/
+    /*width: 100vh;*/
+/*}*/
+/*.visible{*/
+    /*display: block;*/
+/*}*/
+/*
+
+    remove all class
+    $("element").removeClass();
+    OR
+    $("#item").removeAttr('class');
+    OR
+    $("#item").attr('class', '');
+    OR
+    $('#item')[0].className = '';
+
+    remove multi class
+    $("element").removeClass("class1 ... classn");
+    OR
+    $("element").removeClass("class1").removeClass("...").removeClass("classn");
+*/
