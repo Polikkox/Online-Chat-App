@@ -13,7 +13,7 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
 // These are endpoints the client can subscribes to.
-        config.enableSimpleBroker("/subscription", "/welcome", "/check-session", "/user", "queue");
+        config.enableSimpleBroker("/subscription", "/welcome", "/check-session", "/user", "queue", "/get-name");
 // Message received with one of those below destinationPrefixes will be automatically router to controllers @MessageMapping
         config.setApplicationDestinationPrefixes("/backend-point");
         config.setUserDestinationPrefix("/user");

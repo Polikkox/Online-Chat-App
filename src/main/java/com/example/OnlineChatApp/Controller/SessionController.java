@@ -39,7 +39,15 @@ public class SessionController extends RequestContextListener {
             messenger.pushInfoImpl("/check-session/validate", "false");
             return;
         }
+
         messenger.pushInfoImpl("/check-session/validate", "true");
+    }
+
+    @MessageMapping("/name")
+    @SendTo("/get-name/login")
+    public void sendUserName(Principal principal) throws Exception {
+        String data = principal.getName();
+        messenger.pushInfoImpl("/get-name/login", data);
     }
 
     @MessageMapping("/add-session")

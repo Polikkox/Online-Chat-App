@@ -61,6 +61,7 @@ function checkIfClientIsReconnecting(message) {
     if(JSON.stringify("true") === message){
         reconnect = true;
     }
+
 }
 
 function disconnect() {
@@ -82,7 +83,17 @@ function showMessage(message) {
     updateScroll();
 }
 function showMessage2(message) {
+    var personalCard = document.getElementById("copyGlobalDiv" + message.from);
+
+    if(personalCard === null){
+        addUsersOnlineDiv(message.from);
+    }
+
     $("#copyGlobalDiv" + message.from).append("<tr><td>" + message.from + "</td> <td>" + message.message +"</td></tr>");
+    updateScroll();
+}
+function showMessage3(message) {
+    $("#copyGlobalDiv" + message.id).append("<tr><td>" + message.from + "</td> <td>" + message.message +"</td></tr>");
     updateScroll();
 }
 
@@ -90,14 +101,16 @@ function handleOnlineUsers(onlineUsers){
     $("#online tr").remove();
 
     for(let key in onlineUsers) {
-        $("#online").append("<tr><td id=" + onlineUsers[key] + ">" + onlineUsers[key] + "</td.atrr></tr>");
-        $("#" + onlineUsers[key]).click(
-           function () {
-               sendPersonalMessage((onlineUsers[key]));
-               addUsersOnlineDiv(onlineUsers[key]);
-               addGlobalChatListener();
-           }
-       )
+        if(onlineUsers[key] !== name) {
+            $("#online").append("<tr><td id=" + onlineUsers[key] + ">" + onlineUsers[key] + "</td.atrr></tr>");
+        }
+            $("#" + onlineUsers[key]).click(
+                function () {
+                    sendPersonalMessage((onlineUsers[key]));
+                    addUsersOnlineDiv(onlineUsers[key]);
+                    addGlobalChatListener();
+                }
+            )
     }
 }
 
@@ -109,6 +122,7 @@ function addUsersOnlineDiv(onlineUsers) {
         $clone.html(onlineUsers);
         $clone.appendTo($(".row1"));
         addUsersMessageField($clone, onlineUsers);
+        sendPersonalMessage(onlineUsers);
     }
 
 }
@@ -136,8 +150,8 @@ function sendPersonalMessage(message1){
     $("#send").unbind();
     $("#send").click(function() {
         stompClient.send("/backend-point/personal-chat", {}, JSON.stringify({'from': message1, 'message': $("#message").val()}));
-        var mesg = {from: message1, message: $("#message").val()};
-        showMessage2(JSON.parse(JSON.stringify(mesg)));
+        var mesg = {id: message1, from: "Me", message: $("#message").val()};
+        showMessage3(JSON.parse(JSON.stringify(mesg)));
         $("#message").val("");
     });
 
@@ -156,13 +170,21 @@ function establishConnectionWithFirstStomp() {
     stomp1.connect({}, function (frame) {
         stomp1.subscribe('/check-session/validate', function(message){
             checkIfClientIsReconnecting(JSON.stringify(message.body));
-            handleClientConnection();
-
-            stomp1.disconnect();
         });
         stomp1.send("/backend-point/check", {});
+
+        stomp1.subscribe('/get-name/login', function(message){
+            getName(JSON.stringify(message.body));
+            handleClientConnection();
+            stomp1.disconnect();
+        });
+        stomp1.send("/backend-point/name", {});
     });
 
+}
+function getName(login) {
+    name = JSON.parse(login);
+    $('#hello-name').html('Hello ' + name + '!');
 }
 function handleClientConnection() {
     if(reconnect){
