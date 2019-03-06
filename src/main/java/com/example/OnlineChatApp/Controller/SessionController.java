@@ -53,10 +53,12 @@ public class SessionController extends RequestContextListener {
     @MessageMapping("/add-session")
     @SendTo("/check-session/create-session")
     public void createSession(Principal principal) throws Exception {
+
         String data = principal.toString();
         String session = data.substring(data.indexOf("SessionId:") + 11, data.lastIndexOf("; Granted"));
-        this.loggedUserHandler.addUserToList(session, principal.getName());
+        if(this.loggedUserHandler.getOnlineUserByNick(principal.getName()) != null){
+            this.loggedUserHandler.addUserToList(session, principal.getName());
+        }
         this.messenger.pushInfoImpl("/subscription/getSession", session);
-
     }
 }
