@@ -56,7 +56,7 @@ public class SessionController extends RequestContextListener {
 
         String data = principal.toString();
         String session = data.substring(data.indexOf("SessionId:") + 11, data.lastIndexOf("; Granted"));
-        if(this.loggedUserHandler.getOnlineUserByNick(principal.getName()) != null){
+        if(this.loggedUserHandler.getOnlineUserByNick(principal.getName()) == null){
             this.loggedUserHandler.addUserToList(session, principal.getName());
         }
         this.messenger.pushInfoImpl("/subscription/getSession", session);
