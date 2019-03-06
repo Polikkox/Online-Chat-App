@@ -101,9 +101,9 @@ function handleOnlineUsers(onlineUsers){
     $("#online tr").remove();
 
     for(let key in onlineUsers) {
-        if(onlineUsers[key] !== name) {
+        // if(onlineUsers[key] !== name) {
             $("#online").append("<tr><td id=" + onlineUsers[key] + ">" + onlineUsers[key] + "</td.atrr></tr>");
-        }
+        // }
             $("#" + onlineUsers[key]).click(
                 function () {
                     sendPersonalMessage((onlineUsers[key]));
@@ -122,16 +122,21 @@ function addUsersOnlineDiv(onlineUsers) {
         $clone.html(onlineUsers);
         $clone.appendTo($(".row1"));
         addUsersMessageField($clone, onlineUsers);
-        sendPersonalMessage(onlineUsers);
+
     }
+
 
 }
 function addUsersMessageField(user, name) {
     prepareMessagesDiv(name);
     user.click(
         () => {
+            sendPersonalMessage(name);
             $(".copyGlobal").addClass('not-visible');
             $(".copyGlobal" + name).removeClass('not-visible');
+
+            $(".copy-div").removeClass('active-card');
+            $("#copydiv" + name).addClass('active-card');
         }
     );
 }

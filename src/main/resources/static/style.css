@@ -1,16 +1,30 @@
-.title-online-users{
+/*.title-online-users{*/
+    /*background-color: steelblue;*/
+/*}*/
+body{
+    background-color: orange;
+}
+.container{
+    background-color: lightgrey;
+}
+.top-row{
+    margin-top: 20px;
+}
+.text-row{
+    height: 45vh;
+    max-height:45vh;
+    overflow-y:scroll;
+}
+
+.row1{
+    max-width: 400px;
+    padding-top: 15px;
+    padding-left: 15px;
+}
+th{
     background-color: steelblue;
 }
 
-.text-row{
-    max-height:57vh;
-    overflow-y:scroll;
-
-}
-.row1{
-    max-width: 400px;
-
-}
 .input-field{
     position: fixed;
     bottom: 0;
@@ -34,33 +48,23 @@
 }
 .border{
     border-style: solid;
-    border-width: 3px;
+    border-width: 1px;
+}
+
+.active-card{
+    background-color: azure;
 }
 .address{
-    width: 30%;
+    width: 100%;
 }
 .not-visible{
     display: none;
 }
-/*.set-size{*/
-    /*width: 100vh;*/
-/*}*/
-/*.visible{*/
-    /*display: block;*/
-/*}*/
-/*
 
-    remove all class
-    $("element").removeClass();
-    OR
-    $("#item").removeAttr('class');
-    OR
-    $("#item").attr('class', '');
-    OR
-    $('#item')[0].className = '';
+button:active {
+    border: 2px solid green;
+}
 
-    remove multi class
-    $("element").removeClass("class1 ... classn");
-    OR
-    $("element").removeClass("class1").removeClass("...").removeClass("classn");
-*/
+button:focus {
+    border: 2px solid red;
+}
