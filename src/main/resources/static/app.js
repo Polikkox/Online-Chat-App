@@ -216,11 +216,11 @@ function establishConnectionWithFirstStomp() {
 }
 
 function subscribeGetName(stomp1) {
-    alert(1)
+    console.log(1)
     stomp1.subscribe('/get-name/login', function(message){
-        alert(2)
+        console.log(2)
         const loadData = new Promise((resolve, reject) => {
-            alert(3)
+            console.log(3)
             getName(JSON.stringify(message.body));
             resolve();
         });
@@ -232,7 +232,7 @@ function subscribeGetName(stomp1) {
             () => stomp1.disconnect().then(     alert(6))
         );
     });
-    alert(1.5)
+    console.log(1.5)
     stomp1.send("/backend-point/name", {});
 }
 function getName(login) {
