@@ -57,7 +57,14 @@ function sleep(ms) {
 }
 
 function prepareAndHandleSession() {
-    const loadSession = sessionRequest();
+    const loadSession = new Promise((resolve, reject) => {
+        stompClient.subscribe('/subscription/getSession', function (message) {
+            session = JSON.stringify(message.body);
+            session = JSON.parse(session);
+            resolve()
+        });
+        stompClient.send("/backend-point/add-session", {});
+    });
     loadSession.then(
         () => dealWithSessionToReceivingMessages())
 }
@@ -70,7 +77,7 @@ function sessionRequest() {
             console.log("request1");
         });
         stompClient.send("/backend-point/add-session", {});
-        alert('request2')
+        console.log('request2')
     });
 }
 
@@ -190,8 +197,15 @@ function establishConnectionWithFirstStomp() {
     var socket1 = new SockJS('/cc');
     stomp1 = Stomp.over(socket1);
     stomp1.connect({}, function (frame) {
-        const loadedSession = checkUserSessionID();
-        loadedSession.then(
+        const loadSession = new Promise((resolve) => {
+            stomp1.subscribe('/check-session/validate', function(message){
+                checkIfClientIsReconnecting(JSON.stringify(message.body));
+                resolve();
+            });
+            stomp1.send("/backend-point/check", {});
+
+        });
+        loadSession.then(
             () => getLoginFromServer(stomp1))
     });
 }
@@ -241,7 +255,7 @@ function handleClientConnection() {
 }
 
 function dealWithSessionToReceivingMessages(){
-    alert('3')
+   console.log("3");
     stompClient.subscribe('/subscription/' + session, function (message) {
         addMessageReceivedFromAnotherUser(JSON.parse(message.body));
     });
