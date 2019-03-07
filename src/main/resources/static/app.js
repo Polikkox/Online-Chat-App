@@ -196,8 +196,9 @@ function checkUserSessionID() {
     return new Promise((resolve) => {
         stomp1.subscribe('/check-session/validate', function(message){
             checkIfClientIsReconnecting(JSON.stringify(message.body));
-            resolve();
             alert(6);
+            resolve();
+
         });
         stomp1.send("/backend-point/check", {});
         alert(5);
@@ -207,8 +208,11 @@ function checkUserSessionID() {
 function getLoginFromServer(stomp1) {
     alert(7);
     stomp1.subscribe('/get-name/login', function(message){
+        alert(8);
         addLoginToWebsite(JSON.stringify(message.body));
+        alert(9);
         handleClientConnection();
+        alert(10);
         stomp1.disconnect();
     });
     stomp1.send("/backend-point/name", {});
