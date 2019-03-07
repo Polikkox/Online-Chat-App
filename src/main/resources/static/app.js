@@ -217,23 +217,26 @@ function establishConnectionWithFirstStomp() {
 
 function subscribeGetName(stomp1) {
     console.log(1)
-    stomp1.subscribe('/get-name/login', function(message){
+    const loadData2 = new Promise((resolve, reject) => {
         console.log(2)
-        const loadData = new Promise((resolve, reject) => {
-            console.log(3)
+        stomp1.subscribe('/get-name/login', function(message) {
+            console.log(5)
             getName(JSON.stringify(message.body));
-            resolve();
-        });
-        loadData.then(
-            () => handleClientConnection().then(     alert(4))
+            console.log(6)
+            handleClientConnection();
+            stomp1.disconnect();
 
-        );
-        loadData.then(
-            () => stomp1.disconnect().then(     alert(6))
-        );
+        });
+        console.log(2)
+        resolve();
     });
-    console.log(1.5)
-    stomp1.send("/backend-point/name", {});
+    console.log(3)
+    loadData2.then(
+        () => stomp1.send("/backend-point/name", {})
+    );
+
+    console.log(4)
+
 }
 function getName(login) {
     name = JSON.parse(login);
