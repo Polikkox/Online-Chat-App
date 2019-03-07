@@ -26,17 +26,28 @@ function connect() {
 
         demo();
         console.log('Connected: ' + frame);
+        demo3()
 
 
-        stompClient.subscribe('/subscription/room', function (message) {
-            showMessage(JSON.parse(message.body));
-        });
-        stompClient.subscribe('/welcome/onlineUsers', function (message) {
-            handleOnlineUsers(JSON.parse(message.body));
-        });
-
-        stompClient.send("/backend-point/getUsers", {});
     });
+}
+function subscribeRoom(){
+    stompClient.subscribe('/subscription/room', function (message) {
+        showMessage(JSON.parse(message.body));
+    });
+}
+function subscribeOnlineUsers(){
+
+    stompClient.subscribe('/welcome/onlineUsers', function (message) {
+        handleOnlineUsers(JSON.parse(message.body));
+    });
+
+    stompClient.send("/backend-point/getUsers", {});
+}
+async function demo3() {
+    subscribeRoom();
+    await sleep(100);
+    subscribeOnlineUsers();
 }
 
 function sleep(ms) {
@@ -174,19 +185,29 @@ function establishConnectionWithFirstStomp() {
     var socket1 = new SockJS('/cc');
     stomp1 = Stomp.over(socket1);
     stomp1.connect({}, function (frame) {
-        stomp1.subscribe('/check-session/validate', function(message){
-            checkIfClientIsReconnecting(JSON.stringify(message.body));
-        });
-        stomp1.send("/backend-point/check", {});
-
-        stomp1.subscribe('/get-name/login', function(message){
-            getName(JSON.stringify(message.body));
-            handleClientConnection();
-            stomp1.disconnect();
-        });
-        stomp1.send("/backend-point/name", {});
+        async function demo2() {
+            subscribeCheckSession(stomp1);
+            await sleep(30);
+            subscribeGetName(stomp1);
+        }
+        demo2()
     });
 
+}
+
+function subscribeCheckSession(stomp1) {
+    stomp1.subscribe('/check-session/validate', function(message){
+        checkIfClientIsReconnecting(JSON.stringify(message.body));
+    });
+    stomp1.send("/backend-point/check", {});
+}
+function subscribeGetName(stomp1) {
+    stomp1.subscribe('/get-name/login', function(message){
+        getName(JSON.stringify(message.body));
+        handleClientConnection();
+        stomp1.disconnect();
+    });
+    stomp1.send("/backend-point/name", {});
 }
 function getName(login) {
     name = JSON.parse(login);
