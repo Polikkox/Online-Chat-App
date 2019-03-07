@@ -196,12 +196,23 @@ function establishConnectionWithFirstStomp() {
     var socket1 = new SockJS('/cc');
     stomp1 = Stomp.over(socket1);
     stomp1.connect({}, function (frame) {
-        async function demo2() {
-            subscribeCheckSession(stomp1);
-            await sleep(30);
-            subscribeGetName(stomp1);
-        }
-        demo2()
+        // async function demo2() {
+        //     subscribeCheckSession(stomp1);
+        //     await sleep(30);
+        //     subscribeGetName(stomp1);
+        // }
+        // demo2()
+
+        const loadData = new Promise((resolve, reject) => {
+            stomp1.subscribe('/check-session/validate', function(message){
+                checkIfClientIsReconnecting(JSON.stringify(message.body));
+                resolve();
+            });
+            stomp1.send("/backend-point/check", {});
+
+        });
+        loadData.then(
+            () => subscribeGetName(stomp1))
     });
 
 }
