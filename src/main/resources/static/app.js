@@ -23,13 +23,9 @@ function connect() {
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         setConnected(true);
-        console.log("49");
         prepareAndHandleSession();
-        console.log("50");
         subscribeRoom();
-        console.log("51");
         subscribeOnlineUsers();
-        console.log("52");
     });
 }
 
@@ -57,14 +53,7 @@ function sleep(ms) {
 }
 
 function prepareAndHandleSession() {
-    const loadSession = new Promise((resolve, reject) => {
-        stompClient.subscribe('/subscription/getSession', function (message) {
-            session = JSON.stringify(message.body);
-            session = JSON.parse(session);
-            resolve()
-        });
-        stompClient.send("/backend-point/add-session", {});
-    });
+    const loadSession = sessionRequest();
     loadSession.then(
         () => dealWithSessionToReceivingMessages())
 }
@@ -74,10 +63,8 @@ function sessionRequest() {
         stompClient.subscribe('/subscription/getSession', function (message) {
             session = JSON.parse(JSON.stringify(message.body));
             resolve();
-            console.log("request1");
         });
         stompClient.send("/backend-point/add-session", {});
-        console.log('request2')
     });
 }
 
@@ -197,15 +184,8 @@ function establishConnectionWithFirstStomp() {
     var socket1 = new SockJS('/cc');
     stomp1 = Stomp.over(socket1);
     stomp1.connect({}, function (frame) {
-        const loadSession = new Promise((resolve) => {
-            stomp1.subscribe('/check-session/validate', function(message){
-                checkIfClientIsReconnecting(JSON.stringify(message.body));
-                resolve();
-            });
-            stomp1.send("/backend-point/check", {});
-
-        });
-        loadSession.then(
+        const loadedSession = checkUserSessionID();
+        loadedSession.then(
             () => getLoginFromServer(stomp1))
     });
 }
@@ -214,28 +194,20 @@ function checkUserSessionID() {
     return new Promise((resolve) => {
         stomp1.subscribe('/check-session/validate', function(message){
             checkIfClientIsReconnecting(JSON.stringify(message.body));
-            console.log("6");
             resolve();
 
         });
         stomp1.send("/backend-point/check", {});
-        console.log("5");
     });
 }
 
 function getLoginFromServer(stomp1) {
-    console.log("7");
     stomp1.subscribe('/get-name/login', function(message){
-        console.log("8");
         addLoginToWebsite(JSON.stringify(message.body));
-        console.log("9");
         handleClientConnection();
-        console.log("10");
         stomp1.disconnect();
     });
-    console.log("20");
     stomp1.send("/backend-point/name", {});
-    console.log("21");
 }
 
 function addLoginToWebsite(login) {
@@ -255,7 +227,6 @@ function handleClientConnection() {
 }
 
 function dealWithSessionToReceivingMessages(){
-   console.log("3");
     stompClient.subscribe('/subscription/' + session, function (message) {
         addMessageReceivedFromAnotherUser(JSON.parse(message.body));
     });
