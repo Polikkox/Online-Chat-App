@@ -215,7 +215,9 @@ function getLoginFromServer(stomp1) {
         alert(10);
         stomp1.disconnect();
     });
+    alert(20);
     stomp1.send("/backend-point/name", {});
+    alert(21);
 }
 
 function addLoginToWebsite(login) {
