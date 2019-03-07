@@ -45,7 +45,7 @@ function sleep(ms) {
 
 async function demo() {
     subscribeSession();
-    await sleep(30);
+    await sleep(100);
     dealWithSession();
 }
 
