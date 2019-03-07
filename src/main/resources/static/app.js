@@ -24,7 +24,8 @@ function connect() {
     stompClient.connect({}, function (frame) {
         setConnected(true);
         prepareAndHandleSession();
-        demo3()
+        subscribeRoom();
+        subscribeOnlineUsers();
     });
 }
 
@@ -42,9 +43,9 @@ function subscribeOnlineUsers(){
 }
 
 async function demo3() {
-    subscribeRoom();
-    await sleep(100);
-    subscribeOnlineUsers();
+
+    await sleep(10000);
+
 }
 
 function sleep(ms) {
@@ -61,9 +62,11 @@ function sessionRequest() {
     return new Promise((resolve) => {
         stompClient.subscribe('/subscription/getSession', function (message) {
             session = JSON.parse(JSON.stringify(message.body));
-            resolve()
+            resolve();
+            alert('first')
         });
         stompClient.send("/backend-point/add-session", {});
+        alert('second')
     });
 }
 
@@ -92,7 +95,7 @@ function showMessage(message) {
     updateScroll();
 }
 
-function addMessageRecievedFromAnotherUser(message) {
+function addMessageReceivedFromAnotherUser(message) {
     var personalCard = document.getElementById("copyGlobalDiv" + message.from);
 
     if(personalCard === null){
@@ -194,12 +197,15 @@ function checkUserSessionID() {
         stomp1.subscribe('/check-session/validate', function(message){
             checkIfClientIsReconnecting(JSON.stringify(message.body));
             resolve();
+            alert(6);
         });
         stomp1.send("/backend-point/check", {});
+        alert(5);
     });
 }
 
 function getLoginFromServer(stomp1) {
+    alert(6);
     stomp1.subscribe('/get-name/login', function(message){
         addLoginToWebsite(JSON.stringify(message.body));
         handleClientConnection();
@@ -225,8 +231,9 @@ function handleClientConnection() {
 }
 
 function dealWithSessionToReceivingMessages(){
+    alert('3')
     stompClient.subscribe('/subscription/' + session, function (message) {
-        addMessageRecievedFromAnotherUser(JSON.parse(message.body));
+        addMessageReceivedFromAnotherUser(JSON.parse(message.body));
     });
 }
 
