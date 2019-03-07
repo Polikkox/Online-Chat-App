@@ -43,7 +43,7 @@ function subscribeOnlineUsers(){
 
 async function demo3() {
     subscribeRoom();
-    await sleep(100);
+    // await sleep(100);
     subscribeOnlineUsers();
 }
 
