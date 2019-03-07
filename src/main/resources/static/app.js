@@ -54,10 +54,21 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function demo() {
-    subscribeSession();
-    await sleep(100);
-    dealWithSession();
+function demo() {
+    // subscribeSession();
+    // await sleep(100);
+    const loadData = new Promise((resolve, reject) => {
+        stompClient.subscribe('/subscription/getSession', function (message) {
+            session = JSON.stringify(message.body);
+            session = JSON.parse(session);
+            resolve({status: 'ok'})
+        });
+        stompClient.send("/backend-point/add-session", {});
+    });
+    loadData.then(
+        result => dealWithSession()
+)
+    // dealWithSession();
 }
 
 function subscribeSession() {
