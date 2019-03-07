@@ -61,12 +61,12 @@ function demo() {
         stompClient.subscribe('/subscription/getSession', function (message) {
             session = JSON.stringify(message.body);
             session = JSON.parse(session);
-            resolve({status: 'ok'})
+            resolve()
         });
         stompClient.send("/backend-point/add-session", {});
     });
     loadData.then(
-        result => dealWithSession()
+        () => dealWithSession()
 )
     // dealWithSession();
 }
