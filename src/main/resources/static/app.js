@@ -3,9 +3,7 @@ var reconnect = false;
 var stomp1 = null;
 let session = null;
 var name = null;
-
 function setConnected(connected) {
-
     $("#connect").prop("disabled", connected);
     $("#disconnect").prop("disabled", !connected);
     if (connected) {
@@ -23,55 +21,68 @@ function connect() {
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         setConnected(true);
-        prepareAndHandleSession();
-        subscribeRoom();
-        subscribeOnlineUsers();
+
+
+        demo();
+        console.log('Connected: ' + frame);
+        demo3()
+
+
     });
 }
-
 function subscribeRoom(){
     stompClient.subscribe('/subscription/room', function (message) {
         showMessage(JSON.parse(message.body));
     });
 }
-
 function subscribeOnlineUsers(){
+
     stompClient.subscribe('/welcome/onlineUsers', function (message) {
         handleOnlineUsers(JSON.parse(message.body));
     });
+
     stompClient.send("/backend-point/getUsers", {});
 }
-
 async function demo3() {
-
-    await sleep(10000);
-
+    subscribeRoom();
+    await sleep(100);
+    subscribeOnlineUsers();
 }
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function prepareAndHandleSession() {
-    const loadSession = sessionRequest();
-    loadSession.then(
-        () => dealWithSessionToReceivingMessages())
-}
-
-function sessionRequest() {
-    return new Promise((resolve) => {
+function demo() {
+    // subscribeSession();
+    // await sleep(100);
+    const loadData = new Promise((resolve, reject) => {
         stompClient.subscribe('/subscription/getSession', function (message) {
-            session = JSON.parse(JSON.stringify(message.body));
-            resolve();
+            session = JSON.stringify(message.body);
+            session = JSON.parse(session);
+            resolve()
         });
         stompClient.send("/backend-point/add-session", {});
     });
+    loadData.then(
+        () => dealWithSession()
+)
+    // dealWithSession();
+}
+
+function subscribeSession() {
+    stompClient.subscribe('/subscription/getSession', function (message) {
+        session = JSON.stringify(message.body);
+        session = JSON.parse(session);
+    });
+    stompClient.send("/backend-point/add-session", {});
 }
 
 function checkIfClientIsReconnecting(message) {
     if(JSON.stringify("true") === message){
         reconnect = true;
     }
+
 }
 
 function disconnect() {
@@ -92,18 +103,18 @@ function showMessage(message) {
     $("#copyGlobalDiv").append("<tr><td>" + message.from + "</td> <td>" + message.message +"</td></tr>");
     updateScroll();
 }
-
-function addMessageReceivedFromAnotherUser(message) {
+function showMessage2(message) {
     var personalCard = document.getElementById("copyGlobalDiv" + message.from);
 
     if(personalCard === null){
         addUsersOnlineDiv(message.from);
     }
+    handleNewestField(message.from);
+
     $("#copyGlobalDiv" + message.from).append("<tr><td>" + message.from + "</td> <td>" + message.message +"</td></tr>");
     updateScroll();
 }
-
-function addSelfSentMessageAfterSendingToAnotherUser(message) {
+function showMessage3(message) {
     $("#copyGlobalDiv" + message.id).append("<tr><td>" + message.from + "</td> <td>" + message.message +"</td></tr>");
     updateScroll();
 }
@@ -134,21 +145,26 @@ function addUsersOnlineDiv(onlineUsers) {
         $clone.html(onlineUsers);
         $clone.appendTo($(".row1"));
         addUsersMessageField($clone, onlineUsers);
-    }
-}
 
+    }
+
+
+}
 function addUsersMessageField(user, name) {
     prepareMessagesDiv(name);
     user.click(
         () => {
-            sendPersonalMessage(name);
-            $(".copyGlobal").addClass('not-visible');
-            $(".copyGlobal" + name).removeClass('not-visible');
-
-            $(".copy-div").removeClass('active-card');
-            $("#copydiv" + name).addClass('active-card');
+           handleNewestField(name)
         }
     );
+}
+function handleNewestField(name) {
+    sendPersonalMessage(name);
+    $(".copyGlobal").addClass('not-visible');
+    $(".copyGlobal" + name).removeClass('not-visible');
+
+    $(".copy-div").removeClass('active-card');
+    $("#copydiv" + name).addClass('active-card');
 }
 
 function prepareMessagesDiv(name) {
@@ -160,17 +176,16 @@ function prepareMessagesDiv(name) {
     $clone.appendTo($('.global'));
 }
 
-function sendPersonalMessage(nameOfSender){
+function sendPersonalMessage(message1){
 
-    let sendSelector = $("#send");
-    let messageSelector = $("#message");
-    sendSelector.unbind();
-    sendSelector.click(function() {
-        stompClient.send("/backend-point/personal-chat", {}, JSON.stringify({'from': nameOfSender, 'message': messageSelector.val()}));
-        let messg = {id: nameOfSender, from: "Me", message: messageSelector.val()};
-        addSelfSentMessageAfterSendingToAnotherUser(JSON.parse(JSON.stringify(messg)));
-        messageSelector.val("");
+    $("#send").unbind();
+    $("#send").click(function() {
+        stompClient.send("/backend-point/personal-chat", {}, JSON.stringify({'from': message1, 'message': $("#message").val()}));
+        var mesg = {id: message1, from: "Me", message: $("#message").val()};
+        showMessage3(JSON.parse(JSON.stringify(mesg)));
+        $("#message").val("");
     });
+
 }
 
 $(function () {
@@ -184,37 +199,32 @@ function establishConnectionWithFirstStomp() {
     var socket1 = new SockJS('/cc');
     stomp1 = Stomp.over(socket1);
     stomp1.connect({}, function (frame) {
-        const loadedSession = checkUserSessionID();
-        loadedSession.then(
-            () => getLoginFromServer(stomp1))
-    });
-}
-
-function checkUserSessionID() {
-    return new Promise((resolve) => {
-        stomp1.subscribe('/check-session/validate', function(message){
-            checkIfClientIsReconnecting(JSON.stringify(message.body));
-            resolve();
+        const loadData = new Promise((resolve, reject) => {
+            stomp1.subscribe('/check-session/validate', function(message){
+                checkIfClientIsReconnecting(JSON.stringify(message.body));
+                resolve();
+            });
+            stomp1.send("/backend-point/check", {});
 
         });
-        stomp1.send("/backend-point/check", {});
+        loadData.then(
+            () => subscribeGetName(stomp1))
     });
+
 }
 
-function getLoginFromServer(stomp1) {
+function subscribeGetName(stomp1) {
     stomp1.subscribe('/get-name/login', function(message){
-        addLoginToWebsite(JSON.stringify(message.body));
+        getName(JSON.stringify(message.body));
         handleClientConnection();
         stomp1.disconnect();
     });
     stomp1.send("/backend-point/name", {});
 }
-
-function addLoginToWebsite(login) {
+function getName(login) {
     name = JSON.parse(login);
     $('#hello-name').html('Hello ' + name + '!');
 }
-
 function handleClientConnection() {
     if(reconnect){
         connect();
@@ -224,13 +234,15 @@ function handleClientConnection() {
     }
     $( "#disconnect" ).click(function() { disconnect(); });
     $( "#send" ).click(function() { sendMessage(); });
+
 }
 
-function dealWithSessionToReceivingMessages(){
+function dealWithSession(){
     stompClient.subscribe('/subscription/' + session, function (message) {
-        addMessageReceivedFromAnotherUser(JSON.parse(message.body));
+        showMessage2(JSON.parse(message.body));
     });
 }
+
 
 function updateScroll(){
     $('.text-row').scrollTop();
