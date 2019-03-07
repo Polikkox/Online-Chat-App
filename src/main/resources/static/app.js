@@ -196,18 +196,20 @@ function establishConnectionWithFirstStomp() {
     var socket1 = new SockJS('/cc');
     stomp1 = Stomp.over(socket1);
     stomp1.connect({}, function (frame) {
-        const loadSession = new Promise((resolve) => {
-            stomp1.subscribe('/check-session/validate', function(message){
-                checkIfClientIsReconnecting(JSON.stringify(message.body));
-                resolve();
-            });
-            stomp1.send("/backend-point/check", {});
-
-        });
-        loadSession.then(
+        const loadedSession = checkUserSessionID();
+        loadedSession.then(
             () => getLoginFromServer(stomp1))
     });
+}
 
+function checkUserSessionID() {
+    return new Promise((resolve) => {
+        stomp1.subscribe('/check-session/validate', function(message){
+            checkIfClientIsReconnecting(JSON.stringify(message.body));
+            resolve();
+        });
+        stomp1.send("/backend-point/check", {});
+    });
 }
 
 function getLoginFromServer(stomp1) {
