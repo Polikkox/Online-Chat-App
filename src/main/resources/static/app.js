@@ -60,25 +60,17 @@ function demo3() {
 
 
 function demo() {
-    // subscribeSession();
-    // await sleep(100);
     const loadData = new Promise((resolve, reject) => {
         stompClient.subscribe('/subscription/getSession', function (message) {
             session = JSON.stringify(message.body);
             session = JSON.parse(session);
-            alert("yo before");
-            resolve();
-            alert("yo after");
+            resolve()
         });
-        alert("yo przed send");
         stompClient.send("/backend-point/add-session", {});
-        alert("yo po send");
     });
-    alert("yo przed load");
     loadData.then(
-        () => dealWithSession(),
-    )
-    alert("yo po load");
+        () => dealWithSession());
+
 }
 
 function subscribeSession() {
@@ -93,7 +85,6 @@ function checkIfClientIsReconnecting(message) {
     if(JSON.stringify("true") === message){
         reconnect = true;
     }
-
 }
 
 function disconnect() {
@@ -204,7 +195,6 @@ $(function () {
         e.preventDefault();
     });
     establishConnectionWithFirstStomp();
-    alert("calkiem chujiwt js");
 });
 
 function establishConnectionWithFirstStomp() {
@@ -214,29 +204,30 @@ function establishConnectionWithFirstStomp() {
         const loadData = new Promise((resolve, reject) => {
             stomp1.subscribe('/check-session/validate', function(message){
                 checkIfClientIsReconnecting(JSON.stringify(message.body));
-                alert("gg przed resolve");
                 resolve();
-                alert("gg po resolve");
             });
-            alert("gg przed wyslaniem");
             stomp1.send("/backend-point/check", {});
-            alert("gg po wyslaniu");
 
         });
-        alert("gg przed loadem");
         loadData.then(
-            () => subscribeGetName(stomp1));
-        alert("goo po loadzie");
+            () => subscribeGetName(stomp1))
     });
 
 }
 
 function subscribeGetName(stomp1) {
-    alert("gg w ladzie");
     stomp1.subscribe('/get-name/login', function(message){
-        getName(JSON.stringify(message.body));
-        handleClientConnection();
-        stomp1.disconnect();
+        const loadData = new Promise((resolve, reject) => {
+            getName(JSON.stringify(message.body));
+            resolve();
+        });
+        loadData.then(
+            () => handleClientConnection()
+
+        );
+        loadData.then(
+            () => stomp1.disconnect()
+        );
     });
     stomp1.send("/backend-point/name", {});
 }
@@ -257,7 +248,6 @@ function handleClientConnection() {
 }
 
 function dealWithSession(){
-    alert("yo");
     stompClient.subscribe('/subscription/' + session, function (message) {
         showMessage2(JSON.parse(message.body));
     });
