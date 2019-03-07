@@ -104,7 +104,7 @@ function showMessage(message) {
     $("#copyGlobalDiv").append("<tr><td>" + message.from + "</td> <td>" + message.message +"</td></tr>");
     updateScroll();
 }
-function showMessage2(message) {
+function addMessageRecievedFromAnotherUser(message) {
     var personalCard = document.getElementById("copyGlobalDiv" + message.from);
 
     if(personalCard === null){
@@ -114,7 +114,7 @@ function showMessage2(message) {
     $("#copyGlobalDiv" + message.from).append("<tr><td>" + message.from + "</td> <td>" + message.message +"</td></tr>");
     updateScroll();
 }
-function showMessage3(message) {
+function addSelfSentMessageAfterSendingToAnotherUser(message) {
     $("#copyGlobalDiv" + message.id).append("<tr><td>" + message.from + "</td> <td>" + message.message +"</td></tr>");
     updateScroll();
 }
@@ -173,14 +173,15 @@ function prepareMessagesDiv(name) {
     $clone.appendTo($('.global'));
 }
 
-function sendPersonalMessage(message1){
-
-    $("#send").unbind();
-    $("#send").click(function() {
-        stompClient.send("/backend-point/personal-chat", {}, JSON.stringify({'from': message1, 'message': $("#message").val()}));
-        var mesg = {id: message1, from: "Me", message: $("#message").val()};
-        showMessage3(JSON.parse(JSON.stringify(mesg)));
-        $("#message").val("");
+function sendPersonalMessage(nameOfSender){
+    let sendSelector = $("#send");
+    let messageSelector = $("#message");
+    sendSelector.unbind();
+    sendSelector.click(function() {
+        stompClient.send("/backend-point/personal-chat", {}, JSON.stringify({'from': nameOfSender, 'message': messageSelector.val()}));
+        let messg = {id: nameOfSender, from: "Me", message: messageSelector.val()};
+        addSelfSentMessageAfterSendingToAnotherUser(JSON.parse(JSON.stringify(messg)));
+        messageSelector.val("");
     });
 
 }
@@ -240,7 +241,7 @@ function handleClientConnection() {
 
 function dealWithSession(){
     stompClient.subscribe('/subscription/' + session, function (message) {
-        showMessage2(JSON.parse(message.body));
+        addMessageRecievedFromAnotherUser(JSON.parse(message.body));
     });
 }
 
