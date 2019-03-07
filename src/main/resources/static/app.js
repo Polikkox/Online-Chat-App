@@ -23,9 +23,13 @@ function connect() {
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         setConnected(true);
+        console.log("49");
         prepareAndHandleSession();
+        console.log("50");
         subscribeRoom();
+        console.log("51");
         subscribeOnlineUsers();
+        console.log("52");
     });
 }
 
@@ -63,10 +67,10 @@ function sessionRequest() {
         stompClient.subscribe('/subscription/getSession', function (message) {
             session = JSON.parse(JSON.stringify(message.body));
             resolve();
-            alert('first')
+            console.log("request1");
         });
         stompClient.send("/backend-point/add-session", {});
-        alert('second')
+        alert('request2')
     });
 }
 
@@ -196,28 +200,28 @@ function checkUserSessionID() {
     return new Promise((resolve) => {
         stomp1.subscribe('/check-session/validate', function(message){
             checkIfClientIsReconnecting(JSON.stringify(message.body));
-            alert(6);
+            console.log("6");
             resolve();
 
         });
         stomp1.send("/backend-point/check", {});
-        alert(5);
+        console.log("5");
     });
 }
 
 function getLoginFromServer(stomp1) {
-    alert(7);
+    console.log("7");
     stomp1.subscribe('/get-name/login', function(message){
-        alert(8);
+        console.log("8");
         addLoginToWebsite(JSON.stringify(message.body));
-        alert(9);
+        console.log("9");
         handleClientConnection();
-        alert(10);
+        console.log("10");
         stomp1.disconnect();
     });
-    alert(20);
+    console.log("20");
     stomp1.send("/backend-point/name", {});
-    alert(21);
+    console.log("21");
 }
 
 function addLoginToWebsite(login) {
