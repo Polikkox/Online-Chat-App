@@ -219,14 +219,17 @@ function subscribeGetName(stomp1) {
     stomp1.subscribe('/get-name/login', function(message){
         const loadData = new Promise((resolve, reject) => {
             getName(JSON.stringify(message.body));
+            alert(1);
             resolve();
         });
+        alert(2);
         loadData.then(
-            () => handleClientConnection()
+            () => handleClientConnection().then(     alert(4))
 
         );
+        alert(5);
         loadData.then(
-            () => stomp1.disconnect()
+            () => stomp1.disconnect().then(     alert(6))
         );
     });
     stomp1.send("/backend-point/name", {});
@@ -236,6 +239,7 @@ function getName(login) {
     $('#hello-name').html('Hello ' + name + '!');
 }
 function handleClientConnection() {
+    alert(3);
     if(reconnect){
         connect();
     }
