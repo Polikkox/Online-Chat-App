@@ -205,7 +205,7 @@ function checkUserSessionID() {
 }
 
 function getLoginFromServer(stomp1) {
-    alert(6);
+    alert(7);
     stomp1.subscribe('/get-name/login', function(message){
         addLoginToWebsite(JSON.stringify(message.body));
         handleClientConnection();
