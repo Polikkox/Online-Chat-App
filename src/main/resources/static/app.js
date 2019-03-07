@@ -196,14 +196,7 @@ function establishConnectionWithFirstStomp() {
     var socket1 = new SockJS('/cc');
     stomp1 = Stomp.over(socket1);
     stomp1.connect({}, function (frame) {
-        // async function demo2() {
-        //     subscribeCheckSession(stomp1);
-        //     await sleep(30);
-        //     subscribeGetName(stomp1);
-        // }
-        // demo2()
-
-        const loadData = new Promise((resolve, reject) => {
+        const loadSession = new Promise((resolve) => {
             stomp1.subscribe('/check-session/validate', function(message){
                 checkIfClientIsReconnecting(JSON.stringify(message.body));
                 resolve();
@@ -211,30 +204,26 @@ function establishConnectionWithFirstStomp() {
             stomp1.send("/backend-point/check", {});
 
         });
-        loadData.then(
-            () => subscribeGetName(stomp1))
+        loadSession.then(
+            () => getLoginFromServer(stomp1))
     });
 
 }
 
-function subscribeCheckSession(stomp1) {
-    stomp1.subscribe('/check-session/validate', function(message){
-        checkIfClientIsReconnecting(JSON.stringify(message.body));
-    });
-    stomp1.send("/backend-point/check", {});
-}
-function subscribeGetName(stomp1) {
+function getLoginFromServer(stomp1) {
     stomp1.subscribe('/get-name/login', function(message){
-        getName(JSON.stringify(message.body));
+        addLoginToWebsite(JSON.stringify(message.body));
         handleClientConnection();
         stomp1.disconnect();
     });
     stomp1.send("/backend-point/name", {});
 }
-function getName(login) {
+
+function addLoginToWebsite(login) {
     name = JSON.parse(login);
     $('#hello-name').html('Hello ' + name + '!');
 }
+
 function handleClientConnection() {
     if(reconnect){
         connect();
