@@ -216,22 +216,23 @@ function establishConnectionWithFirstStomp() {
 }
 
 function subscribeGetName(stomp1) {
+    alert(1)
     stomp1.subscribe('/get-name/login', function(message){
+        alert(2)
         const loadData = new Promise((resolve, reject) => {
+            alert(3)
             getName(JSON.stringify(message.body));
-            alert(1);
             resolve();
         });
-        alert(2);
         loadData.then(
             () => handleClientConnection().then(     alert(4))
 
         );
-        alert(5);
         loadData.then(
             () => stomp1.disconnect().then(     alert(6))
         );
     });
+    alert(1.5)
     stomp1.send("/backend-point/name", {});
 }
 function getName(login) {
@@ -239,7 +240,6 @@ function getName(login) {
     $('#hello-name').html('Hello ' + name + '!');
 }
 function handleClientConnection() {
-    alert(3);
     if(reconnect){
         connect();
     }
