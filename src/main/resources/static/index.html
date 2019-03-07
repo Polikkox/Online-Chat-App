@@ -12,21 +12,29 @@
 </head>
 <body>
 <div class="container testimonial-group">
-    <div class="row top-row">
-        <div class="col-md-4">
+    <div class="row first-row">
+        <div class="col-lg-6">
             <form class="form-inline">
                 <div class="form-group">
-                    <div id="hello-name"></div>
-                    <label  for="connect">Make Connection:</label>
-                    <button id="connect" class="btn btn-default" type="submit">Connect</button>
-                    <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect
-                    </button>
+                    <h2 id="hello-name"></h2>
                 </div>
             </form>
         </div>
+        <div class="col-md-6 top-row">
+            <span class="pull-right">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label  for="connect">Make Connection:</label>
+                        <button id="connect" class="btn btn-default" type="submit">Connect</button>
+                        <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect
+                        </button>
+                    </div>
+                </form>
+            </span>
+        </div>
     </div>
-    <div class="row row1">
-        <div class="col-sm-3 border active-card copy-div">
+    <div class="row row1 setSize">
+        <div class="col-sm-3 border active-card copy-div" style="display: none;">
             <form class="form-inline">
                 <div class="form-group">
                    <div class="address" id="copy-global-id">Global
@@ -37,23 +45,23 @@
     </div>
     <div class="row">
         <div class="global">
-            <div class="col-lg-6 copyGlobal setSize global-main" id="copy-id">
+            <div class="col-md-8 copyGlobal global-main" id="copy-id">
                 <div class="row">
-                    <div class="col-lg-9 text-row">
+                    <div class="col-md-9 text-row messages">
                         <table id="conversation" class="table table-striped">
-                            <!--<thead>-->
+                            <thead>
                             <tr>
                                 <th class="th">From:</th>
                                 <th class="th">Message</th>
                             </tr>
-                            <!--</thead>-->
+                            </thead>
                             <tbody class="tbodyClass" id="copyGlobalDiv">
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4"><span class="pull-right">
+        <div class="col-md-4">
             <table id="online-users" class="table table-striped title-online-users">
                 <thead>
                 <tr>
@@ -62,16 +70,16 @@
                 </thead>
                 <tbody id="online">
             </table>
-        </span></div>
+        </div>
     </div>
     <div class="row input-field">
-        <div class="col-lg-12">
+        <div class="col-lg-8">
             <form class="form-inline text-area">
                 <div class="form-group">
-                    <label for="message">Type message:</label><p></p>
+                    <label for="message"></label>
                     <textarea id="message" class="form-control"></textarea>
+                    <button id="send" class="btn btn-primary" type="submit">Send</button>
                 </div>
-                <button id="send" class="btn btn-primary" type="submit">Send</button><p></p>
             </form>
         </div>
     </div>

@@ -101,9 +101,9 @@ function handleOnlineUsers(onlineUsers){
     $("#online tr").remove();
 
     for(let key in onlineUsers) {
-        // if(onlineUsers[key] !== name) {
+        if(onlineUsers[key] !== name) {
             $("#online").append("<tr><td id=" + onlineUsers[key] + ">" + onlineUsers[key] + "</td.atrr></tr>");
-        // }
+        }
             $("#" + onlineUsers[key]).click(
                 function () {
                     sendPersonalMessage((onlineUsers[key]));
@@ -119,6 +119,7 @@ function addUsersOnlineDiv(onlineUsers) {
     if($("#copydiv" + onlineUsers).length === 0){
         let $clone = $(".copy-div").last().clone();
         $clone.attr('id', 'copydiv' + onlineUsers);
+        $clone.show();
         $clone.html(onlineUsers);
         $clone.appendTo($(".row1"));
         addUsersMessageField($clone, onlineUsers);
@@ -144,7 +145,7 @@ function addUsersMessageField(user, name) {
 function prepareMessagesDiv(name) {
 
     let $clone = $(".copyGlobal").first().clone();
-    $clone.addClass('copyGlobal' + name +' col-lg-6 not-visible');
+    $clone.addClass('copyGlobal' + name +' not-visible');
     $clone.find('tbody').html("");
     $clone.find('.tbodyClass').attr('id', 'copyGlobalDiv' + name);
     $clone.appendTo($('.global'));
