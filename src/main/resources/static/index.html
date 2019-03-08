@@ -13,21 +13,21 @@
 <body>
 <div class="container testimonial-group">
     <div class="row first-row">
-        <div class="col-lg-6">
+        <div class="col-lg-5">
             <form class="form-inline">
                 <div class="form-group">
                     <h2 id="hello-name"></h2>
                 </div>
             </form>
         </div>
-        <div class="col-md-6 top-row">
+        <div class="col-md-7 top-row">
             <span class="pull-right">
                 <form class="form-inline">
                     <div class="form-group">
                         <label  for="connect">Make Connection:</label>
                         <button id="connect" class="btn btn-default" type="submit">Connect</button>
-                        <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect
-                        </button>
+                        <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect</button>
+                        <span class="status-offline"></span>
                     </div>
                 </form>
             </span>
@@ -51,8 +51,8 @@
                         <table id="conversation" class="table table-striped">
                             <thead>
                             <tr>
-                                <th class="th">From:</th>
-                                <th class="th">Message</th>
+                                <!--<th class="th">From:</th>-->
+                                <!--<th class="th">Message</th>-->
                             </tr>
                             </thead>
                             <tbody class="tbodyClass" id="copyGlobalDiv">

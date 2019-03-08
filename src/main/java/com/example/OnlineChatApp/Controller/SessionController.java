@@ -31,7 +31,6 @@ public class SessionController extends RequestContextListener {
     }
 
     @MessageMapping("/check")
-//    @SendTo("/check-session/validate")
     public void checkUsersThatAreOnline(Principal principal) throws Exception {
         String data = principal.toString();
         String session = data.substring(data.indexOf("SessionId:") + 11, data.lastIndexOf("; Granted"));
@@ -44,7 +43,7 @@ public class SessionController extends RequestContextListener {
     }
 
     @MessageMapping("/name")
-//    @SendTo("/get-name/login")
+    @SendTo("/get-name/login")//to do
     public void sendUserName(Principal principal) throws Exception {
         System.out.println("here " + principal.getName());
         String data = principal.getName();
@@ -52,7 +51,6 @@ public class SessionController extends RequestContextListener {
     }
 
     @MessageMapping("/add-session")
-//    @SendTo("/check-session/create-session")
     public void createSession(Principal principal) throws Exception {
 
         String data = principal.toString();
