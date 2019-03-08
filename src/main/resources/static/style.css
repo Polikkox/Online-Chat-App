@@ -130,15 +130,18 @@ button:focus {
 .tr-user-title{
     border: 3px solid darkorange;
     border-radius: 5px;
-    height: 1vh !important;
+
 }
 .user-title{
     background-color: orange;
-    width: 80%;
 }
+
 .date{
     background-color: orange;
     text-align: right;
+}
+.tr-user-message{
+    height: 9vh !important;
 }
 
 .status-offline {
