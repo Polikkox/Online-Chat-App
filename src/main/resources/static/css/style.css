@@ -1,6 +1,6 @@
 
 body{
-    background-image: url("wallpaper.jpg");
+    background-image: url("../images/wallpaper.jpg");
     no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
