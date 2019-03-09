@@ -127,7 +127,7 @@ function handleOnlineUsers(onlineUsers){
 
     for(let key in onlineUsers) {
         if(onlineUsers[key] !== name) {
-            $("#online").append("<tr><td id=" + onlineUsers[key] + ">" + onlineUsers[key] + "</td.atrr></tr>");
+            $("#online").append("<tr><td class='hover' id=" + onlineUsers[key] + ">" + onlineUsers[key] + "</td.atrr></tr>");
         }
         $("#" + onlineUsers[key]).click(
             function () {
@@ -153,7 +153,7 @@ function sendPersonalMessage(message1){
 function addSelfSentMessageAfterSendingToAnotherUser(message) {
     let date = new Date();
     let actualDate = date.getHours() + ":"  + date.getMinutes() + ":" + date.getSeconds();
-    $("#copyGlobalDiv" + message.id).append("<tr class='tr-user-title'><td class='user-title'>" + message.from + "</td><td class='date'>" + actualDate + "</td></tr><tr class='tr-user-message'><td>" + message.message +"</td></tr>");
+    $("#copyGlobalDiv" + message.id).append("<tr class='tr-user-title'><td class='user-title'><div class='style-td'>" + message.from + "</div></td><td class='date'><div class='style-td'>" + actualDate + "</div></td></tr><tr class='tr-user-message'><td>" + message.message +"</td></tr>");
     updateScroll();
 }
 
@@ -195,7 +195,7 @@ function addMessageReceivedFromAnotherUser(message) {
     handleNewestField(message.from);
     let date = new Date();
     let actualDate = date.getHours() + ":"  + date.getMinutes() + ":" + date.getSeconds();
-    $("#copyGlobalDiv" + message.from).append("<tr class='tr-user-title'><td class='user-title'>" + message.from + "</td><td class='date'>" + actualDate + "</td></tr><tr class='tr-user-message'><td>" + message.message +"</td></tr>");
+    $("#copyGlobalDiv" + message.from).append("<tr class='tr-user-title'><td class='user-title'><div class='style-td'>" + message.from + "</div></td><td class='date'><div class='style-td'>" + actualDate + "</div></td></tr><tr class='tr-user-message'><td>" + message.message +"</td></tr>");
     updateScroll();
 }
 

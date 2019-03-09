@@ -13,16 +13,16 @@
 <body>
 <div class="container testimonial-group">
     <div class="row first-row">
-        <div class="col-lg-5">
-            <form class="form-inline">
+        <div class="col-sm-5">
+            <form class="form-inline form-size">
                 <div class="form-group">
-                    <h2 id="hello-name"></h2>
+                    <h3 id="hello-name"></h3>
                 </div>
             </form>
         </div>
-        <div class="col-md-7 top-row">
+        <div class="col-sm-7 top-row">
             <span class="pull-right">
-                <form class="form-inline">
+                <form class="form-inline form-size">
                     <div class="form-group">
                         <label  for="connect">Make Connection:</label>
                         <button id="connect" class="btn btn-default" type="submit">Connect</button>
@@ -34,7 +34,7 @@
         </div>
     </div>
     <div class="row row1 setSize">
-        <div class="col-sm-3 border active-card copy-div" style="display: none;">
+        <div class="col-sm-2 border active-card copy-div" style="display: none;">
             <form class="form-inline">
                 <div class="form-group">
                    <div class="address" id="copy-global-id">Global
@@ -45,9 +45,19 @@
     </div>
     <div class="row">
         <div class="global">
-            <div class="col-md-8 copyGlobal global-main" id="copy-id">
+            <div class="col-md-3">
+                <table id="online-users" class="table table-striped title-online-users">
+                    <thead>
+                    <tr class="users-online-tr">
+                        <th >Users Online:</th>
+                    </tr>
+                    </thead>
+                    <tbody id="online">
+                </table>
+            </div>
+            <div class="col-md-9 copyGlobal global-main" id="copy-id">
                 <div class="row">
-                    <div class="col-md-9 text-row messages">
+                    <div class="col-md-10 text-row messages">
                         <table id="conversation" class="table table-striped">
                             <thead>
                             <tr>
@@ -60,16 +70,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <table id="online-users" class="table table-striped title-online-users">
-                <thead>
-                <tr>
-                    <th >Users Online:</th>
-                </tr>
-                </thead>
-                <tbody id="online">
-            </table>
         </div>
     </div>
     <div class="row input-field">

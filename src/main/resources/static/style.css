@@ -9,7 +9,7 @@ body{
 }
 .container{
     width: 55%;
-    margin-top: 5vh;
+    margin-top: 3vh;
     background-color: whitesmoke;
     border: 8px solid silver;
     border-radius: 4px;
@@ -18,21 +18,34 @@ body{
 .first-row{
     border-bottom: 6px solid silver;
     border-radius: 4px;
+
+}
+.form-size{
+    height: 40px;
+    margin-top: 5px;
+}
+.form-group h3{
+    margin-top: 5px;
 }
 
-.top-row{
-    margin-top: 20px;
-}
+/*.top-row{*/
+    /*margin-top: 20px;*/
+/*}*/
 .text-row{
-    height: 45vh;
-    max-height:45vh;
+    width: content-box;
+    height: 50vh;
+    max-height:50vh;
     overflow-y:scroll;
     padding-left: 0 !important;
     padding-right: 0 !important;
 }
+/*.global{*/
+    /*width: 90vh;*/
+/*}*/
 .messages{
-    border-right: 6px solid silver;
-    border-top: 6px solid silver;
+    margin-left: 10vh;
+    border-left: 6px solid silver;
+    /*border-top: 6px solid silver;*/
     border-radius: 4px;
     background-color: whitesmoke;
 }
@@ -44,10 +57,12 @@ body{
 .title-online-users tr{
     text-align: center;
 }
+
 .title-online-users tr th{
     text-align: center;
 }
 .title-online-users{
+    margin-left: 5.5vh;
     background-color: steelblue;
     width: 20vh;
 }
@@ -56,7 +71,7 @@ body{
 }
 
 .row1{
-    max-width: 43vh;
+    width: auto;
 }
 th{
     background-color: steelblue;
@@ -91,6 +106,7 @@ th{
     padding: 8px 12px;
     text-decoration: none;
     opacity: 0.9;
+    width: 12vh;
 }
 
 .testimonial-group > .row1 {
@@ -102,16 +118,16 @@ th{
     float: none;
 }
 .setSize{
-    height: 41px;
+    height: 46px;
+    border-bottom: 6px solid silver;
+    border-radius: 4px;
 }
 
 .active-card{
     border-color: lightgrey;
     opacity: 1;
 }
-.address{
-    width: 70%;
-}
+
 .not-visible{
     display: none;
 }
@@ -127,21 +143,22 @@ button:focus {
     display: none;
 }
 
-.tr-user-title{
-    border: 3px solid darkorange;
-    border-radius: 5px;
 
+.style-td{
+    font-size:10px;
+    height:10px;
 }
+
 .user-title{
-    background-color: orange;
+    background-color: yellow;
 }
 
 .date{
-    background-color: orange;
+    background-color: yellow;
     text-align: right;
 }
 .tr-user-message{
-    height: 9vh !important;
+    height: 7vh !important;
 }
 
 .status-offline {
@@ -159,4 +176,22 @@ button:focus {
     height: 15px;
     width: 15px;
     border-radius: 15px;
+}
+.hover{
+    background-color: orange;
+    border: 2px solid darkorange;
+    border-radius: 5px;
+}
+.hover:hover{
+    transition:all 0.5s;
+    border: 2px solid white;
+    border-radius: 5px;
+    cursor:pointer;
+    background-color:rgba(0,0,0,0.5);
+    color: white;
+}
+
+.users-online-tr{
+    border: 2px solid steelblue;
+    border-radius: 20px;
 }
