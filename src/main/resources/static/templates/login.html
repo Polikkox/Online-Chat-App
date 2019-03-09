@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="eng" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Sing Up!</title>
+<link rel="stylesheet" type="text/css"  href="../css/loginStyle.css">
+</head>
+
+<body>
+<div th:fragment="content">
+    <form name="f" th:action="@{/login}" method="post">
+        <div class="imgcontainer">
+            <img class="avatar" src="../images/img_avatar2.png" alt="Avatar">
+        </div>
+        <div class="container">
+            <fieldset>
+                <legend>Please Login</legend>
+                <label for="uname"><b>Username</b></label>
+                <input id="uname" type="text" placeholder="Enter Username" name="username">
+                <label for="psw"><b>Password</b></label>
+                <input id="psw" type="password" placeholder="Enter Password" name="password">
+                <button type="submit">Login</button>
+
+                <div class="container" style="background-color:#f1f1f1">
+                <button type="button" class="cancelbtn">Cancel</button>
+                <span class="psw"> <button type="submit">Forgot password?</button></span>
+                </div>
+
+            </fieldset>
+        </div>
+    </form>
+</div>
+</body>
+</html>
