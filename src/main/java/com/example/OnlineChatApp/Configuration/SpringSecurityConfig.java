@@ -9,34 +9,39 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @Configuration
 // Switch off the Spring Boot security configuration
-@EnableWebSecurity
+//@EnableWebSecurity
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/resources/static/**").permitAll()
+        http.authorizeRequests()
+//                .antMatchers("/resources/static/**/**").permitAll()
                 .antMatchers("/images/**").permitAll()
                 .antMatchers("/css/**").permitAll()
+                .antMatchers("/app/sign-up").permitAll()
                 .antMatchers("/js/**").permitAll()
-                .antMatchers("/templates/**").permitAll()
+//                .antMatchers("/app/login**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/templates/login.html").defaultSuccessUrl("/templates/index.html", true)
-                .permitAll();
-
+                .formLogin()
+                .loginPage("/app/login").permitAll()
+                .defaultSuccessUrl("/app/messenger", true)
+                .permitAll()
+                .and()
+                .csrf().disable()
+                .httpBasic();
     }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
         auth.inMemoryAuthentication()
-                .withUser("user").password("123").roles("USER")
+                .withUser("user").password("{noop}123").roles("USER")
                 .and()
-                .withUser("admin").password("123").roles("ADMIN")
+                .withUser("admin").password("{noop}123").roles("ADMIN")
                 .and()
-                .withUser("admin1").password("123").roles("ADMIN");
+                .withUser("admin1").password("{noop}123").roles("ADMIN");
     }
+
 }
