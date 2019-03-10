@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <title>Spring Boot WebSocket!</title>
-    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <script src="/webjars/jquery/jquery.min.js"></script>
-    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
-    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
-    <script src="../js/app.js"></script>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="http://cdn.jsdelivr.net/sockjs/1.0.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <link href="../css/style.css" rel="stylesheet" type="text/css">
+    <script src="../js/app.js"></script>
 
 </head>
 <body>
@@ -60,10 +62,7 @@
                     <div class="col-md-10 text-row messages">
                         <table id="conversation" class="table table-striped">
                             <thead>
-                            <tr>
-                                <!--<th class="th">From:</th>-->
-                                <!--<th class="th">Message</th>-->
-                            </tr>
+                            <tr></tr>
                             </thead>
                             <tbody class="tbodyClass" id="copyGlobalDiv">
                         </table>
