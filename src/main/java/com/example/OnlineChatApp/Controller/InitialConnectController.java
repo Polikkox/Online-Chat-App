@@ -15,14 +15,14 @@ public class InitialConnectController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String loginPost(){
         System.out.println("login post");
-        return "/login.html";
+        return "login.html";
     }
 
 
     @RequestMapping("/messenger")
     public String mainPage(){
         System.out.println("messenger");
-        return "/index.html";
+        return "index.html";
     }
 
     @RequestMapping(value = "/sign-up", method = RequestMethod.GET)
