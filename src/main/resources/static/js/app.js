@@ -126,12 +126,24 @@ function dealWithSession(){
 }
 
 function subscribeOnlineUsers(){
-
+    let lock = true;
     stompClient.subscribe('/welcome/onlineUsers', function (message) {
+        lock = false;
         handleOnlineUsers(JSON.parse(message.body));
     });
 
-    stompClient.send("/backend-point/getUsers", {});
+    const loadData = new Promise((resolve, reject) => {
+        stompClient.send("/backend-point/getUsers", {});
+        resolve();
+    });
+    //In case of unexpected behaviour related with missing message
+    loadData.then(
+        () =>   setTimeout(function(){
+            if (lock){
+                stompClient.send("/backend-point/getUsers", {});
+            }
+        }, 100));
+
 }
 
 function handleOnlineUsers(onlineUsers){
