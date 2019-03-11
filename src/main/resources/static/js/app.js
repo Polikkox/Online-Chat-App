@@ -56,7 +56,7 @@ function getName(initialStompClient) {
             if (lock){
                 initialStompClient.send("/backend-point/name");
             }
-        }, 100));
+        }, 20));
 }
 
 function addNameToWebSite(login) {
@@ -142,7 +142,7 @@ function subscribeOnlineUsers(){
             if (lock){
                 stompClient.send("/backend-point/getUsers", {});
             }
-        }, 100));
+        }, 20));
 
 }
 
