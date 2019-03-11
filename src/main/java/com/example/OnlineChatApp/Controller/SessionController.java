@@ -33,7 +33,7 @@ public class SessionController extends RequestContextListener {
     @MessageMapping("/check")
     public void checkUsersThatAreOnline(Principal principal) throws Exception {
         String data = principal.toString();
-        String session = data.substring(data.indexOf("SessionId:") + 11, data.lastIndexOf("; Granted"));
+        String session = data.substring(data.indexOf("SessionId:") + 11, data.lastIndexOf("; Not granted"));
         if(loggedUserHandler.getOnlineUserBySessionID(session) == null){
             messenger.pushInfoImpl("/check-session/validate", "false");
             return;
@@ -45,16 +45,14 @@ public class SessionController extends RequestContextListener {
     @MessageMapping("/name")
     @SendTo("/get-name/login")//to do
     public void sendUserName(Principal principal) throws Exception {
-        System.out.println("here " + principal.getName());
         String data = principal.getName();
         messenger.pushInfoImpl("/get-name/login", data);
     }
 
     @MessageMapping("/add-session")
     public void createSession(Principal principal) throws Exception {
-
         String data = principal.toString();
-        String session = data.substring(data.indexOf("SessionId:") + 11, data.lastIndexOf("; Granted"));
+        String session = data.substring(data.indexOf("SessionId:") + 11, data.lastIndexOf("; Not granted"));
         if(this.loggedUserHandler.getOnlineUserByNick(principal.getName()) == null){
             this.loggedUserHandler.addUserToList(session, principal.getName());
         }

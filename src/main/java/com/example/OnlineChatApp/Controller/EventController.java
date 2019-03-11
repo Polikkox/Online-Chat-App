@@ -33,7 +33,7 @@ public class EventController {
     @EventListener
     public void onSocketConnected(SessionConnectedEvent event) {
         String userDetails = event.getMessage().getHeaders().get("simpUser").toString();
-        String sessionID = userDetails.substring(userDetails.indexOf("SessionId:") + 11, userDetails.lastIndexOf("; Granted"));
+        String sessionID = userDetails.substring(userDetails.indexOf("SessionId:") + 11, userDetails.lastIndexOf("; Not granted"));
         String name = event.getUser().getName();
         System.out.println("[Connected] " + name + " [Session ID] " + sessionID);
     }
@@ -44,9 +44,8 @@ public class EventController {
     @EventListener
     public void onSocketDisconnected(SessionDisconnectEvent event) {
         String userDetails = event.getMessage().getHeaders().get("simpUser").toString();
-        String sessionID = userDetails.substring(userDetails.indexOf("SessionId:") + 11, userDetails.lastIndexOf("; Granted"));
+        String sessionID = userDetails.substring(userDetails.indexOf("SessionId:") + 11, userDetails.lastIndexOf("; Not granted"));
         String name = event.getUser().getName();
-        System.out.println("[Disonnected] " +  name + " Session ID " + sessionID);
 //        this.loggedUserHandler.removeUserBySessionID(sessionID);
         this.messenger.pushInfoImpl("/welcome/onlineUsers", this.loggedUserHandler.getOnlineUsers());
     }

@@ -26,7 +26,6 @@ public class WebController {
     public void sendPersonalMessage(Message message, Principal principal){
         String sessionID = this.loggedUserHandler.getOnlineUserByNick(message.getFrom());
         Message message1 = new Message();
-        System.out.println(principal.getName());
         message1.setFrom(principal.getName());
         message1.setMessage(message.getMessage());
         this.messenger.pushInfoImpl("/subscription/" + sessionID, message1);
