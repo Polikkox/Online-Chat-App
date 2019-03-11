@@ -1,5 +1,6 @@
 package com.example.OnlineChatApp.Controller;
 
+import com.example.OnlineChatApp.Model.Message;
 import com.example.OnlineChatApp.Service.LoggedUserHandler;
 import com.example.OnlineChatApp.Service.Messenger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,9 +45,10 @@ public class SessionController extends RequestContextListener {
 
     @MessageMapping("/name")
     @SendTo("/get-name/login")//to do
-    public void sendUserName(Principal principal) throws Exception {
+    public Message sendUserName(Principal principal) throws Exception {
         String data = principal.getName();
-        messenger.pushInfoImpl("/get-name/login", data);
+//        messenger.pushInfoImpl("/get-name/login", data);
+        return new Message(principal.getName(), data);
     }
 
     @MessageMapping("/add-session")

@@ -37,18 +37,30 @@ function checkIfClientIsReconnecting(message) {
 }
 
 function getName(initialStompClient) {
+    let lock = true;
 
     initialStompClient.subscribe('/get-name/login', function(message) {
-        addNameToWebSite(JSON.stringify(message.body));
+        lock = false;
+        addNameToWebSite(JSON.parse(message.body));
         handleClientConnection();
         initialStompClient.disconnect();
     });
 
-    initialStompClient.send("/backend-point/name");
+    const loadData = new Promise((resolve, reject) => {
+        initialStompClient.send("/backend-point/name");
+        resolve();
+    });
+    //In case of unexpected behaviour related with missing message
+    loadData.then(
+        () =>   setTimeout(function(){
+            if (lock){
+                initialStompClient.send("/backend-point/name");
+            }
+        }, 100));
 }
 
 function addNameToWebSite(login) {
-    name = JSON.parse(login);
+    name = login.message;
     $('#hello-name').html('Hello ' + name + '!');
 }
 
