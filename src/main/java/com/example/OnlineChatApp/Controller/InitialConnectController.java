@@ -10,19 +10,19 @@ public class InitialConnectController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginGet(){
         System.out.println("login get");
-        return "/login.html";
+        return "login.html";
     }
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String loginPost(){
         System.out.println("login post");
-        return "/login";
+        return "/login.html";
     }
 
 
     @RequestMapping("/messenger")
     public String mainPage(){
         System.out.println("messenger");
-        return "/index";
+        return "/index.html";
     }
 
     @RequestMapping(value = "/sign-up", method = RequestMethod.GET)
