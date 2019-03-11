@@ -10,7 +10,7 @@ public class InitialConnectController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginGet(){
         System.out.println("login get");
-        return "/login";
+        return "/login.html";
     }
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String loginPost(){
@@ -28,7 +28,7 @@ public class InitialConnectController {
     @RequestMapping(value = "/sign-up", method = RequestMethod.GET)
     public String signUpGet(){
         System.out.println("sign up get");
-        return "/sign-up";
+        return "sign-up.html";
     }
 
     @RequestMapping(value = "/sign-up", method = RequestMethod.POST)
