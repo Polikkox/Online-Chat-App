@@ -170,6 +170,7 @@ function sendPersonalMessage(message1){
         stompClient.send("/backend-point/personal-chat", {}, JSON.stringify({'from': message1, 'message': $("#message").val()}));
         let mesg = {id: message1, from: "Me", message: $("#message").val()};
         addSelfSentMessageAfterSendingToAnotherUser(JSON.parse(JSON.stringify(mesg)));
+        soundSendingMessage();
         $("#message").val("");
     });
 
@@ -182,6 +183,7 @@ function sendMessageIfEnterPressed(message1) {
             stompClient.send("/backend-point/personal-chat", {}, JSON.stringify({'from': message1, 'message': $("#message").val()}));
             let mesg = {id: message1, from: "Me", message: $("#message").val()};
             addSelfSentMessageAfterSendingToAnotherUser(JSON.parse(JSON.stringify(mesg)));
+            soundSendingMessage();
             $("#message").val("");
         }
     });
@@ -234,6 +236,7 @@ function addMessageReceivedFromAnotherUser(message) {
     let date = new Date();
     let actualDate = date.getHours() + ":"  + date.getMinutes() + ":" + date.getSeconds();
     $("#copyGlobalDiv" + message.from).append("<tr class='tr-user-title'><td class='user-title'><div class='style-td'>" + message.from + "</div></td><td class='date'><div class='style-td'>" + actualDate + "</div></td></tr><tr class='tr-user-message'><td>" + message.message +"</td></tr>");
+    soundReceivedMessage();
     updateScroll();
 }
 
@@ -260,4 +263,14 @@ function disconnect() {
 function updateScroll(){
     $('.tr-user-message').last().get(0).scrollIntoView();
 
+}
+
+function soundReceivedMessage() {
+    let sound = new Audio('../sounds/to-the-point.mp3');
+    sound.play();
+}
+
+function soundSendingMessage() {
+    let sound = new Audio('../sounds/stairs.mp3');
+    sound.play();
 }
