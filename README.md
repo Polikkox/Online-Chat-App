@@ -5,6 +5,18 @@ The	chat	server	can	accept	and	maintain	connections	to	all	the	clients	and	relay
 Used	technologies:	Spring	Boot,	Spring	Security,	Hibernate,	Websocket,	PostgreSQL	database	and	STOMP
 library.
 
+<p align="center">
+    <img src="https://i.imgur.com/YuNF5Ns.png">
+  </a>
+
+## To-do
+- Add feature sending message on pressing enter 
+- Archiving messages in database
+- Add sound when receiving messages
+- Logout function
+- Enable possibility to sending images
+- Add emoji
+
 **Getting started**
 
     1.Download the code
