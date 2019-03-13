@@ -158,7 +158,6 @@ function handleOnlineUsers(onlineUsers){
                 sendPersonalMessage((onlineUsers[key]));
                 addUsersOnlineDiv(onlineUsers[key]);
                 sendMessageIfEnterPressed(onlineUsers[key]);
-
             }
         )
     }
@@ -192,7 +191,6 @@ function addSelfSentMessageAfterSendingToAnotherUser(message) {
     let date = new Date();
     let actualDate = date.getHours() + ":"  + date.getMinutes() + ":" + date.getSeconds();
     $("#copyGlobalDiv" + message.id).append("<tr class='tr-user-title'><td class='user-title'><div class='style-td'>" + message.from + "</div></td><td class='date'><div class='style-td'>" + actualDate + "</div></td></tr><tr class='tr-user-message'><td>" + message.message +"</td></tr>");
-    var xx = $('.tr-user-message').last().position().top;
     updateScroll();
 }
 
@@ -206,6 +204,7 @@ function addUsersOnlineDiv(onlineUsers) {
         $clone.appendTo($(".row1"));
         addUsersMessageField($clone, onlineUsers);
     }
+    handleNewestField(onlineUsers);
 }
 
 function addUsersMessageField(user, name) {
