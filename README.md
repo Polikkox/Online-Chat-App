@@ -17,7 +17,10 @@ library.
 - Enable possibility to sending images
 - Add emoji
 
-**Getting started**
+## App is available online:
+    https://chat-mesenger.herokuapp.com/
+    
+## Getting started
 
     1.Download the code
     git clone https://github.com/Polikkox/Online-Chat-App/
