@@ -192,6 +192,7 @@ function addSelfSentMessageAfterSendingToAnotherUser(message) {
     let date = new Date();
     let actualDate = date.getHours() + ":"  + date.getMinutes() + ":" + date.getSeconds();
     $("#copyGlobalDiv" + message.id).append("<tr class='tr-user-title'><td class='user-title'><div class='style-td'>" + message.from + "</div></td><td class='date'><div class='style-td'>" + actualDate + "</div></td></tr><tr class='tr-user-message'><td>" + message.message +"</td></tr>");
+    var xx = $('.tr-user-message').last().position().top;
     updateScroll();
 }
 
@@ -258,5 +259,6 @@ function disconnect() {
 }
 
 function updateScroll(){
-    $('.text-row').scrollTop();
+    $('.tr-user-message').last().get(0).scrollIntoView();
+
 }
