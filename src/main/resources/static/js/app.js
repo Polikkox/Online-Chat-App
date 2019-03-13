@@ -37,18 +37,30 @@ function checkIfClientIsReconnecting(message) {
 }
 
 function getName(initialStompClient) {
+    let lock = true;
 
     initialStompClient.subscribe('/get-name/login', function(message) {
-        addNameToWebSite(JSON.stringify(message.body));
+        lock = false;
+        addNameToWebSite(JSON.parse(JSON.stringify(message.body)));
         handleClientConnection();
         initialStompClient.disconnect();
     });
 
-    initialStompClient.send("/backend-point/name");
+    const loadData = new Promise((resolve, reject) => {
+        initialStompClient.send("/backend-point/name");
+        resolve();
+    });
+    //In case of unexpected behaviour related with missing message
+    loadData.then(
+        () =>   setTimeout(function(){
+            if (lock){
+                initialStompClient.send("/backend-point/name");
+            }
+        }, 20));
 }
 
 function addNameToWebSite(login) {
-    name = JSON.parse(login);
+    name = login;
     $('#hello-name').html('Hello ' + name + '!');
 }
 
@@ -114,12 +126,24 @@ function dealWithSession(){
 }
 
 function subscribeOnlineUsers(){
-
+    let lock = true;
     stompClient.subscribe('/welcome/onlineUsers', function (message) {
+        lock = false;
         handleOnlineUsers(JSON.parse(message.body));
     });
 
-    stompClient.send("/backend-point/getUsers", {});
+    const loadData = new Promise((resolve, reject) => {
+        stompClient.send("/backend-point/getUsers", {});
+        resolve();
+    });
+    //In case of unexpected behaviour related with missing message
+    loadData.then(
+        () =>   setTimeout(function(){
+            if (lock){
+                stompClient.send("/backend-point/getUsers", {});
+            }
+        }, 20));
+
 }
 
 function handleOnlineUsers(onlineUsers){
@@ -133,6 +157,8 @@ function handleOnlineUsers(onlineUsers){
             function () {
                 sendPersonalMessage((onlineUsers[key]));
                 addUsersOnlineDiv(onlineUsers[key]);
+                sendMessageIfEnterPressed(onlineUsers[key]);
+
             }
         )
     }
@@ -148,6 +174,18 @@ function sendPersonalMessage(message1){
         $("#message").val("");
     });
 
+}
+
+function sendMessageIfEnterPressed(message1) {
+    $(document).unbind('keypress');
+    $(document).on('keypress',function(e) {
+        if(e.which == 13) {
+            stompClient.send("/backend-point/personal-chat", {}, JSON.stringify({'from': message1, 'message': $("#message").val()}));
+            let mesg = {id: message1, from: "Me", message: $("#message").val()};
+            addSelfSentMessageAfterSendingToAnotherUser(JSON.parse(JSON.stringify(mesg)));
+            $("#message").val("");
+        }
+    });
 }
 
 function addSelfSentMessageAfterSendingToAnotherUser(message) {
@@ -201,6 +239,7 @@ function addMessageReceivedFromAnotherUser(message) {
 
 function handleNewestField(name) {
     sendPersonalMessage(name);
+    sendMessageIfEnterPressed(name);
     $(".copyGlobal").addClass('not-visible');
     $(".copyGlobal" + name).removeClass('not-visible');
 
