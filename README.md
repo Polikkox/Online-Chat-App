@@ -10,9 +10,7 @@ library.
   </a>
 
 ## To-do
-- Add feature sending message on pressing enter 
 - Archiving messages in database
-- Add sound when receiving messages
 - Logout function
 - Enable possibility to sending images
 - Add emoji
