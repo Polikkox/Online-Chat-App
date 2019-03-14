@@ -2,7 +2,7 @@
 Chat	application	that	allows	to	handle	multiple	chat	clients	simultaneously.	In	particular,
 connected	clients	can:	list	the	members	already	logged	in,	log	in,	exchange	messages	with	other	logged	in	users.
 The	chat	server	can	accept	and	maintain	connections	to	all	the	clients	and	relay	chat	messages	between	them.
-Used	technologies:	Spring	Boot,	Spring	Security,	Hibernate,	Websocket,	PostgreSQL	database	and	STOMP
+Used	technologies:	Spring	Boot,	Spring	Security,	Websocket,	PostgreSQL	database	and	STOMP
 library.
 
 <p align="center">
