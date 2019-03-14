@@ -18,12 +18,12 @@ library.
 - Add emoji
 
 ## App is available online:
-    https://chat-mesenger.herokuapp.com/
+    https://gg-chat-mesenger.herokuapp.com/
     
 ## Getting started
 
     1.Download the code
-    git clone https://github.com/Polikkox/Online-Chat-App/
+    git clone https://gg-chat-messenger.herokuapp.com/app
     2.Adjust database properties in application.properties
     3.Run application
     4.Go to address localhost:8080/
