@@ -41,7 +41,7 @@ function getName(initialStompClient) {
 
     initialStompClient.subscribe('/get-name/login', function(message) {
         lock = false;
-        addNameToWebSite(JSON.parse(message.body));
+        addNameToWebSite(JSON.parse(JSON.stringify(message.body)));
         handleClientConnection();
         initialStompClient.disconnect();
     });
@@ -60,7 +60,7 @@ function getName(initialStompClient) {
 }
 
 function addNameToWebSite(login) {
-    name = login.message;
+    name = login;
     $('#hello-name').html('Hello ' + name + '!');
 }
 
@@ -157,6 +157,7 @@ function handleOnlineUsers(onlineUsers){
             function () {
                 sendPersonalMessage((onlineUsers[key]));
                 addUsersOnlineDiv(onlineUsers[key]);
+                sendMessageIfEnterPressed(onlineUsers[key]);
             }
         )
     }
@@ -169,9 +170,23 @@ function sendPersonalMessage(message1){
         stompClient.send("/backend-point/personal-chat", {}, JSON.stringify({'from': message1, 'message': $("#message").val()}));
         let mesg = {id: message1, from: "Me", message: $("#message").val()};
         addSelfSentMessageAfterSendingToAnotherUser(JSON.parse(JSON.stringify(mesg)));
+        soundSendingMessage();
         $("#message").val("");
     });
 
+}
+
+function sendMessageIfEnterPressed(message1) {
+    $(document).unbind('keypress');
+    $(document).on('keypress',function(e) {
+        if(e.which == 13) {
+            stompClient.send("/backend-point/personal-chat", {}, JSON.stringify({'from': message1, 'message': $("#message").val()}));
+            let mesg = {id: message1, from: "Me", message: $("#message").val()};
+            addSelfSentMessageAfterSendingToAnotherUser(JSON.parse(JSON.stringify(mesg)));
+            soundSendingMessage();
+            $("#message").val("");
+        }
+    });
 }
 
 function addSelfSentMessageAfterSendingToAnotherUser(message) {
@@ -191,6 +206,7 @@ function addUsersOnlineDiv(onlineUsers) {
         $clone.appendTo($(".row1"));
         addUsersMessageField($clone, onlineUsers);
     }
+    handleNewestField(onlineUsers);
 }
 
 function addUsersMessageField(user, name) {
@@ -220,11 +236,13 @@ function addMessageReceivedFromAnotherUser(message) {
     let date = new Date();
     let actualDate = date.getHours() + ":"  + date.getMinutes() + ":" + date.getSeconds();
     $("#copyGlobalDiv" + message.from).append("<tr class='tr-user-title'><td class='user-title'><div class='style-td'>" + message.from + "</div></td><td class='date'><div class='style-td'>" + actualDate + "</div></td></tr><tr class='tr-user-message'><td>" + message.message +"</td></tr>");
+    soundReceivedMessage();
     updateScroll();
 }
 
 function handleNewestField(name) {
     sendPersonalMessage(name);
+    sendMessageIfEnterPressed(name);
     $(".copyGlobal").addClass('not-visible');
     $(".copyGlobal" + name).removeClass('not-visible');
 
@@ -243,5 +261,16 @@ function disconnect() {
 }
 
 function updateScroll(){
-    $('.text-row').scrollTop();
+    $('.tr-user-message').last().get(0).scrollIntoView();
+
+}
+
+function soundReceivedMessage() {
+    let sound = new Audio('../sounds/to-the-point.mp3');
+    sound.play();
+}
+
+function soundSendingMessage() {
+    let sound = new Audio('../sounds/stairs.mp3');
+    sound.play();
 }

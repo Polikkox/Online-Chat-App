@@ -22,17 +22,21 @@
                 </div>
             </form>
         </div>
-        <div class="col-sm-7 top-row">
-            <span class="pull-right">
+        <div class="col-sm-6 top-row">
+            <div class="pull-right">
                 <form class="form-inline form-size">
                     <div class="form-group">
                         <label  for="connect">Make Connection:</label>
                         <button id="connect" class="btn btn-default" type="submit">Connect</button>
                         <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect</button>
-                        <span class="status-offline"></span>
                     </div>
                 </form>
-            </span>
+            </div>
+        </div>
+        <div class="col-sm-1 top-row">
+            <div class="form-group online-status">
+                <span class="status-offline"></span>
+            </div>
         </div>
     </div>
     <div class="row row1 setSize">
@@ -60,7 +64,7 @@
             <div class="col-md-9 copyGlobal global-main" id="copy-id">
                 <div class="row">
                     <div class="col-md-10 text-row messages">
-                        <table id="conversation" class="table table-striped">
+                        <table id="conversation" class="table table-striped abc">
                             <thead>
                             <tr></tr>
                             </thead>
@@ -71,6 +75,18 @@
             </div>
         </div>
     </div>
+    <!--<div class="row features-row">-->
+        <!--<div class="col-lg-12">-->
+            <!--<form class="form-inline">-->
+                <!--<div class="features">-->
+                    <!--<div class="features-bold space-between">B</div>-->
+                    <!--<div class="features-italic space-between">I</div>-->
+                    <!--<div class="features-underline space-between">U</div>-->
+                    <!--<div class="features-emoji space-between">E</div>-->
+                <!--</div>-->
+            <!--</form>-->
+        <!--</div>-->
+    <!--</div>-->
     <div class="row input-field">
         <div class="col-lg-8">
             <form class="form-inline text-area">
