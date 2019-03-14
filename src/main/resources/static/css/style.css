@@ -22,15 +22,13 @@ body{
 }
 .form-size{
     height: 40px;
-    margin-top: 5px;
+    margin-top: 2vh;
 }
+
 .form-group h3{
     margin-top: 5px;
 }
 
-/*.top-row{*/
-    /*margin-top: 20px;*/
-/*}*/
 .text-row{
     width: content-box;
     height: 50vh;
@@ -39,9 +37,7 @@ body{
     padding-left: 0 !important;
     padding-right: 0 !important;
 }
-/*.global{*/
-    /*width: 90vh;*/
-/*}*/
+
 .messages{
     margin-left: 10vh;
     border-left: 6px solid silver;
@@ -67,7 +63,18 @@ body{
     width: 20vh;
 }
 .text-area{
+    display:block;
     margin-top: -17px;
+}
+
+#send{
+    position:absolute;
+    bottom:10px;
+    right: -26vh
+}
+
+textarea{
+    display:block;
 }
 
 .row1{
@@ -86,10 +93,6 @@ th{
     height: 25vh;
     border: 6px solid silver;
     border-radius: 4px;
-}
-#send{
-    position: fixed;
-    margin-top: 19.5vh;
 }
 
 .border {
@@ -160,17 +163,19 @@ button:focus {
 .tr-user-message{
     height: 7vh !important;
 }
+.online-status{
+    margin-top: 3vh;
+}
 
 .status-offline {
-    margin-left: 30px;
     background-color: red;
     display: inline-block;
     height: 15px;
     width: 15px;
     border-radius: 15px;
 }
+
 .status-online {
-    margin-left: 30px;
     background-color: green;
     display: inline-block;
     height: 15px;
@@ -195,3 +200,24 @@ button:focus {
     border: 2px solid steelblue;
     border-radius: 20px;
 }
+/*.features-row{*/
+    /*border-top: 8px solid silver;*/
+    /*border-radius: 4px;*/
+/*}*/
+
+/*.features{*/
+    /*display: flex;*/
+    /*justify-content: flex-start;*/
+/*}*/
+
+/*.features-bold{*/
+    /*margin-left: 50px;*/
+/*}*/
+
+/*.space-between{*/
+    /*margin-right: 10px;*/
+    /*border: 2px solid steelblue;*/
+    /*width: 40px;*/
+    /*text-align: center;*/
+    /*background-color: steelblue;*/
+/*}*/

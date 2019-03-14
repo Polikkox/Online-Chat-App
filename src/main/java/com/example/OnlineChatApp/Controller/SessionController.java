@@ -44,11 +44,10 @@ public class SessionController extends RequestContextListener {
     }
 
     @MessageMapping("/name")
-    @SendTo("/get-name/login")//to do
-    public Message sendUserName(Principal principal) throws Exception {
+    @SendTo("/get-name/login")
+    public void sendUserName(Principal principal) throws Exception {
         String data = principal.getName();
-//        messenger.pushInfoImpl("/get-name/login", data);
-        return new Message(principal.getName(), data);
+        messenger.pushInfoImpl("/get-name/login", data);
     }
 
     @MessageMapping("/add-session")
