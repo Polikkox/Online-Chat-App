@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="eng" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -14,23 +14,29 @@
         <div class="imgcontainer">
             <img class="avatar" src="../images/img_avatar2.png" alt="Avatar">
         </div>
-        <div class="container">
-            <fieldset>
-                <legend>Please Login</legend>
-                <label for="uname"><b>Username</b></label>
-                <input id="uname" type="text" placeholder="Enter Username" name="username">
-                <label for="psw"><b>Password</b></label>
-                <input id="psw" type="password" placeholder="Enter Password" name="password">
-                <button type="submit">Login</button>
+        <div class="form">
 
-                <div class="container" style="background-color:#f1f1f1">
-                    <button type="button" class="cancelbtn">Cancel</button>
-                    <span class="psw">
-                        <button formmethod="get" formaction="/app/sign-up"> Create Account?</button>
-                        </span>
-                </div>
+            <div class="alert" th:classappend="${success}" style="display: none">
+                <strong>Success!</strong> Account has been created successfully
+            </div>
+            <div class="container">
+                <fieldset>
+                    <legend>Please Login</legend>
+                    <label for="uname"><b>Username</b></label>
+                    <input id="uname" type="text" placeholder="Enter Username" name="username">
+                    <label for="psw"><b>Password</b></label>
+                    <input id="psw" type="password" placeholder="Enter Password" name="password">
+                    <button type="submit">Login</button>
 
-            </fieldset>
+                    <div class="container" style="background-color:#f1f1f1">
+                        <button type="button" class="cancelbtn">Cancel</button>
+                        <span class="psw">
+                            <button formmethod="get" formaction="/app/sign-up"> Create Account?</button>
+                            </span>
+                    </div>
+
+                </fieldset>
+            </div>
         </div>
     </form>
 </div>
