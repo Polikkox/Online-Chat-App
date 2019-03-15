@@ -19,18 +19,11 @@ public class RegistrationService {
     }
 
     public User registerUser(String login, String psw) {
-//        if(!passwordIsValid(psw, pswRepeat)){
-//
-//        }
-//        if(loginExist(login){
-//
-//        }
         User user = new User();
         user.setUsername(login);
         user.setPassword(bCryptPasswordEncoder.encode(psw));
         this.userRepository.save(user);
         return user;
-//        return "your account has been created successfully";
     }
 
     public boolean loginExist(String login){
