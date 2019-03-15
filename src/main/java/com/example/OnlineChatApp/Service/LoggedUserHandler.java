@@ -16,10 +16,10 @@ public class LoggedUserHandler {
     public Map<String, String> getOnlineUsers() {
         return this.onlineUsersMap;
     }
+
     public void removeUserBySessionID(String sessionID){
         this.onlineUsersMap.remove(sessionID);
     }
-
 
     public String getOnlineUserBySessionID(String sessionID) {
         return this.onlineUsersMap.get(sessionID);
