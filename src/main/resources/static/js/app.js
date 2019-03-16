@@ -107,9 +107,10 @@ function sendMessage() {
 
 function prepareAndHandleSession() {
     const loadData = new Promise((resolve, reject) => {
-        stompClient.subscribe('/subscription/getSession', function (message) {
+        let result = stompClient.subscribe('/subscription/getSession', function (message) {
             session = JSON.stringify(message.body);
             session = JSON.parse(session);
+            result.unsubscribe();
             resolve()
         });
         stompClient.send("/backend-point/add-session", {});
@@ -148,16 +149,22 @@ function subscribeOnlineUsers(){
 
 function handleOnlineUsers(onlineUsers){
     $("#online tr").remove();
+    let archivedMessagesArePulled = false;
 
     for(let key in onlineUsers) {
         if(onlineUsers[key] !== name) {
             $("#online").append("<tr><td class='hover' id=" + onlineUsers[key] + ">" + onlineUsers[key] + "</td.atrr></tr>");
         }
+
         $("#" + onlineUsers[key]).click(
             function () {
                 sendPersonalMessage((onlineUsers[key]));
                 addUsersOnlineDiv(onlineUsers[key]);
                 sendMessageIfEnterPressed(onlineUsers[key]);
+                if(!archivedMessagesArePulled){
+                    loadArchivedMessages(onlineUsers[key]);
+                    archivedMessagesArePulled= true;
+                }
             }
         )
     }
@@ -250,6 +257,31 @@ function handleNewestField(name) {
     $("#copydiv" + name).addClass('active-card');
 }
 
+function loadArchivedMessages(client) {
+    let result = stompClient.subscribe('/archive/chatLoad' + session, function (message) {
+        pushArchivedMessagesToConversation(message, client);
+        result.unsubscribe();
+    });
+    stompClient.send("/backend-point/chat-history", {}, JSON.stringify({'from': client}));
+}
+
+function pushArchivedMessagesToConversation(message, client) {
+    if(JSON.parse(message.body) == null){
+        return;
+    }
+    message = JSON.parse(message.body);
+    for(let i = 0; i < message.length; i++){
+        if(message[i].login === name){
+            $("#copyGlobalDiv" + client).append("<tr class='tr-user-title'><td class='user-title'><div class='style-td'>" + "Me" + "</div></td><td class='date'><div class='style-td'>" + message[i].time + "</div></td></tr><tr class='tr-user-message'><td>" + message[i].message +"</td></tr>");
+        }
+        else{
+            $("#copyGlobalDiv" + client).append("<tr class='tr-user-title'><td class='user-title'><div class='style-td'>" + message[i].login + "</div></td><td class='date'><div class='style-td'>" + message[i].time + "</div></td></tr><tr class='tr-user-message'><td>" + message[i].message +"</td></tr>");
+
+        }
+    }
+    updateScroll();
+}
+
 function disconnect() {
     $(".status-online").attr('class', 'status-offline');
     if (stompClient != null) {
@@ -257,7 +289,6 @@ function disconnect() {
         stompClient.disconnect();
     }
     setConnected(false);
-    console.log("Disconnected");
 }
 
 function updateScroll(){
