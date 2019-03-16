@@ -34,7 +34,6 @@ public class EventController {
     public void onSocketConnected(SessionConnectedEvent event) {
         String sessionID = getFullSessionFromConnectEvent(event);
         String name = event.getUser().getName();
-        System.out.println("[Connected] " + name + " [Session ID] " + sessionID);
     }
 
     @EventListener
