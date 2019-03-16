@@ -1,6 +1,6 @@
 package com.example.OnlineChatApp.Controller;
 
-import com.example.OnlineChatApp.Model.Chat;
+import com.example.OnlineChatApp.Model.ChatArchive;
 import com.example.OnlineChatApp.Model.Message;
 import com.example.OnlineChatApp.Service.ChatHistoryService;
 import com.example.OnlineChatApp.Service.LoggedUserHandler;
@@ -53,7 +53,7 @@ public class WebController {
        String nameOfClientRequesting = principal.getName();
        String secondPerson = message.getFrom();
        String sessionID = this.loggedUserHandler.getOnlineUserByNick(nameOfClientRequesting);
-       List<Chat> archivedMessages = this.chatHistoryService.findArchivedChatHistory(nameOfClientRequesting, secondPerson);
+       List<ChatArchive> archivedMessages = this.chatHistoryService.findArchivedChatHistory(nameOfClientRequesting, secondPerson);
        this.messenger.pushInfoImpl("/archive/chatLoad" + sessionID, archivedMessages);
 
     }
