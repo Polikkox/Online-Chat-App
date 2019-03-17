@@ -166,7 +166,7 @@ function handleOnlineUsers(onlineUsers){
                     archivedMessagesArePulled= true;
                 }
             }
-        )
+        );
     }
 }
 
@@ -183,15 +183,17 @@ function sendPersonalMessage(message1){
 
 }
 
-function sendMessageIfEnterPressed(message1) {
+function sendMessageIfEnterPressed(user) {
+
     $(document).unbind('keypress');
     $(document).on('keypress',function(e) {
+
         if(e.which == 13) {
-            stompClient.send("/backend-point/personal-chat", {}, JSON.stringify({'from': message1, 'message': $("#message").val()}));
-            let mesg = {id: message1, from: "Me", message: $("#message").val()};
+            stompClient.send("/backend-point/personal-chat", {}, JSON.stringify({'from': user, 'message': $("#message").val()}));
+            let mesg = {id: user, from: "Me", message: $("#message").val()};
             addSelfSentMessageAfterSendingToAnotherUser(JSON.parse(JSON.stringify(mesg)));
             soundSendingMessage();
-            $("#message").val("");
+            $("#message").val("")
         }
     });
 }
@@ -214,6 +216,14 @@ function addUsersOnlineDiv(onlineUsers) {
         addUsersMessageField($clone, onlineUsers);
     }
     handleNewestField(onlineUsers);
+    onFileUploadEvent(onlineUsers);
+}
+
+function onFileUploadEvent(user) {
+    $('#inputFileToLoad').removeAttr('disabled');
+    $("body").on('change', '#inputFileToLoad', function () {
+        encodeImageFileAsURL(user)
+    })
 }
 
 function addUsersMessageField(user, name) {
@@ -250,6 +260,7 @@ function addMessageReceivedFromAnotherUser(message) {
 function handleNewestField(name) {
     sendPersonalMessage(name);
     sendMessageIfEnterPressed(name);
+    onFileUploadEvent(name);
     $(".copyGlobal").addClass('not-visible');
     $(".copyGlobal" + name).removeClass('not-visible');
 
@@ -304,4 +315,55 @@ function soundReceivedMessage() {
 function soundSendingMessage() {
     let sound = new Audio('../sounds/stairs.mp3');
     sound.play();
+}
+
+function encodeImageFileAsURL(address) {
+    let filesSelected = document.getElementById("inputFileToLoad").files;
+    if (filesSelected.length > 0) {
+        let fileToLoad = filesSelected[0];
+
+        let fileReader = new FileReader();
+
+        fileReader.onload = function(fileLoadedEvent) {
+            let srcData = fileLoadedEvent.target.result; // <--- data: base64
+
+            let newImage = document.createElement('img');
+            newImage.src = srcData;
+
+            document.getElementById("imgTest").innerHTML = newImage.outerHTML;
+
+            let file = document.getElementById("imgTest").innerHTML;
+            sendFile(file, address)
+        };
+        fileReader.readAsDataURL(fileToLoad);
+    }
+}
+
+function sendFile(file, address){
+    sendFileIfEnterClicked(address, file);
+    $(".send-file").unbind();
+    $(".send-file").click(function() {
+        stompClient.send("/backend-point/personal-chat", {}, JSON.stringify({'from': address, 'message': file}));
+        let mesg = {id: address, from: "Me", message: file};
+        addSelfSentMessageAfterSendingToAnotherUser(JSON.parse(JSON.stringify(mesg)));// to check!!!
+        soundSendingMessage();
+        $("#imgTest").html("");
+        file = "";
+    });
+}
+
+function sendFileIfEnterClicked(user, file) {
+
+    $(document).unbind('keypress');
+    $(document).on('keypress',function(e) {
+
+        if(e.which == 13) {
+            stompClient.send("/backend-point/personal-chat", {}, JSON.stringify({'from': user, 'message': file}));
+            let mesg = {id: user, from: "Me", message: file};
+            addSelfSentMessageAfterSendingToAnotherUser(JSON.parse(JSON.stringify(mesg)));
+            soundSendingMessage();
+            $("#imgTest").html("");
+            file = "";
+        }
+    });
 }
