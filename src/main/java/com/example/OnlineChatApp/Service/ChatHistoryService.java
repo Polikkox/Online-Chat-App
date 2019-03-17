@@ -40,7 +40,13 @@ public class ChatHistoryService {
         }
 
         ChatArchive chat = new ChatArchive();
-        chat.setMessage(message);
+        if(message.length() < 255){
+            chat.setMessage(message);
+        }
+        else{
+            chat.setMessage("img was here");
+        }
+
         chat.setlogin(client1);
         chat.setTime(date());
         conversation.getChat().add(chat);
