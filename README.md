@@ -6,7 +6,7 @@ Used	technologies:	Spring	Boot,	Spring	Security,	Websocket,	PostgreSQL	database	
 library.
 
 <p align="center">
-    <img src="https://i.imgur.com/YuNF5Ns.png">
+    <img src="https://i.imgur.com/Yy5cBxf.png">
   </a>
 
 ## To-do
