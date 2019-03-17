@@ -1,6 +1,6 @@
 # Online-Chat-App
 Chat	application	that	allows	to	handle	multiple	chat	clients	simultaneously.	In	particular,
-connected	clients	can:	list	the	members	already	logged	in,	log	in,	exchange	messages	with	other	logged	in	users.
+connected	clients	can:	list	the	members	already	logged	in,	log	in,	exchange	messages	with	other	logged	in	users and sent images thru chat. Server also archive all exhcange messages in database.
 The	chat	server	can	accept	and	maintain	connections	to	all	the	clients	and	relay	chat	messages	between	them.
 Used	technologies:	Spring	Boot,	Spring	Security,	Websocket,	PostgreSQL	database	and	STOMP
 library.
@@ -10,9 +10,7 @@ library.
   </a>
 
 ## To-do
-- Archiving messages in database
 - Logout function
-- Enable possibility to sending images
 - Add emoji
 
 ## App is available online:
