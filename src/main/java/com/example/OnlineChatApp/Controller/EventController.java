@@ -32,37 +32,23 @@ public class EventController {
 
     @EventListener
     public void onSocketConnected(SessionConnectedEvent event) {
-        String userDetails = event.getMessage().getHeaders().get("simpUser").toString();
-        String sessionID = userDetails.substring(userDetails.indexOf("SessionId:") + 11, userDetails.lastIndexOf("; Not granted"));
+        String sessionID = getFullSessionFromConnectEvent(event);
         String name = event.getUser().getName();
-        System.out.println("[Connected] " + name + " [Session ID] " + sessionID);
     }
-
-
-
 
     @EventListener
     public void onSocketDisconnected(SessionDisconnectEvent event) {
-        String userDetails = event.getMessage().getHeaders().get("simpUser").toString();
-        String sessionID = userDetails.substring(userDetails.indexOf("SessionId:") + 11, userDetails.lastIndexOf("; Not granted"));
         String name = event.getUser().getName();
-//        this.loggedUserHandler.removeUserBySessionID(sessionID);
+        this.loggedUserHandler.removeUserByUserName(name);
         this.messenger.pushInfoImpl("/welcome/onlineUsers", this.loggedUserHandler.getOnlineUsers());
     }
 
-//
-//    @EventListener
-//    public void onApplicationEvent(ApplicationEvent appEvent) {
-//
-//            AuthenticationSuccessEvent event = (AuthenticationSuccessEvent) appEvent;
-//            UserDetails userDetails = (UserDetails) event.getAuthentication().getPrincipal();
-//
-//            RequestContextHolder.currentRequestAttributes().getSessionId();
-//            String user = userDetails.getUsername();
-//            System.out.println(user);
-//            System.out.println(RequestContextHolder.currentRequestAttributes().getSessionId());
-//
-//        }
+    private String getFullSessionFromConnectEvent(SessionConnectedEvent event){
+        String userDetails = event.getMessage().getHeaders().get("simpUser").toString();
+        String sessionID =  userDetails.substring(userDetails.indexOf("SessionId:") + 11, userDetails.lastIndexOf("; Not granted"));
+        return sessionID;
+    }
+
 
 }
 

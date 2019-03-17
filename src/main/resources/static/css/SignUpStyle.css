@@ -1,7 +1,13 @@
 * {box-sizing: border-box}
 
+body{
+    background-color: orange;
+}
 /* Add padding to containers */
 .container {
+    width: 70%;
+    margin: auto;
+    background-color: white;
     padding: 16px;
 }
 
@@ -51,4 +57,14 @@ a {
 .signin {
     background-color: #f1f1f1;
     text-align: center;
+}
+
+.alert {
+    padding: 20px;
+    background-color: #f44336;
+    color: white;
+}
+
+.display{
+    display: block !important;
 }

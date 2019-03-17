@@ -75,27 +75,47 @@
             </div>
         </div>
     </div>
-    <!--<div class="row features-row">-->
-        <!--<div class="col-lg-12">-->
-            <!--<form class="form-inline">-->
-                <!--<div class="features">-->
-                    <!--<div class="features-bold space-between">B</div>-->
-                    <!--<div class="features-italic space-between">I</div>-->
-                    <!--<div class="features-underline space-between">U</div>-->
-                    <!--<div class="features-emoji space-between">E</div>-->
-                <!--</div>-->
-            <!--</form>-->
-        <!--</div>-->
-    <!--</div>-->
+    <div class="row features-row">
+        <div class="col-lg-9">
+            <form class="form-inline">
+                <div class="features">
+                    <fieldset>
+                        <button class="features-bold space-between" onclick="document.execCommand( 'bold',false,null);" title="Bold Highlighted Text"><b>B</b>
+                        </button>
+                        <button class="features-italic space-between" onclick="document.execCommand('italic',false,null);" title="Italicize Highlighted Text"><i>I</i>
+                        </button>
+                        <button class="features-underline space-between" onclick="document.execCommand( 'underline',false,null);"><u>U</u>
+                        </button>
+                        <button class="features-emoji space-between"><u>Emoji</u>
+                        </button>
+                    </fieldset>
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-3">
+            <div class="features-files space-between">
+                <label for="inputFileToLoad">
+                    <input id="inputFileToLoad" type="file" disabled accept="image/png, image/jpeg"/>
+                </label>
+            </div>
+        </div>
+    </div>
     <div class="row input-field">
         <div class="col-lg-8">
             <form class="form-inline text-area">
                 <div class="form-group">
-                    <label for="message"></label>
-                    <textarea id="message" class="form-control"></textarea>
-                    <button id="send" class="btn btn-primary" type="submit">Send</button>
+                    <div class="picture-area">
+                        <!--<label for="message"></label>-->
+                        <!--<textarea id="message" class="form-control"></textarea>-->
+                        <div id="message" class="editor1 message form-control" contenteditable="true">
+                        </div>
+                        <div id="imgTest"></div>
+                    </div>
                 </div>
             </form>
+        </div>
+        <div class="col-lg-1 send-button">
+            <button id="send" class="btn btn-primary send-file" type="submit">Send</button>
         </div>
     </div>
 </div>

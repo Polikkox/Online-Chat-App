@@ -1,7 +1,7 @@
 package com.example.OnlineChatApp.Service;
 
 import com.example.OnlineChatApp.Model.User;
-import com.example.OnlineChatApp.Repository.RegistrationRepository;
+import com.example.OnlineChatApp.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -9,29 +9,31 @@ import org.springframework.stereotype.Service;
 @Service
 public class RegistrationService {
 
-    private RegistrationRepository registrationRepository;
+    private UserRepository userRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public RegistrationService(RegistrationRepository registrationRepository,
-                               BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.registrationRepository = registrationRepository;
+    public RegistrationService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public boolean registerUser(String username, String psw, String pswRepeat) {
-        if(passwordIsValid(psw, pswRepeat)){
-            User user = new User();
-            user.setUsername(username);
-            user.setPassword(bCryptPasswordEncoder.encode(psw));
-            this.registrationRepository.save(user);
-            return true;
-        }
-        return false;
-
+    public User registerUser(String login, String psw) {
+        User user = new User();
+        user.setUsername(login);
+        user.setPassword(bCryptPasswordEncoder.encode(psw));
+        this.userRepository.save(user);
+        return user;
     }
 
-    private boolean passwordIsValid(String psw, String pswRepeat){
+    public boolean loginExist(String login){
+        if(this.userRepository.findByUsername(login) == null){
+            return false;
+        }
+        return true;
+    }
+
+    public boolean passwordIsValid(String psw, String pswRepeat){
         return psw.equals(pswRepeat);
     }
 }

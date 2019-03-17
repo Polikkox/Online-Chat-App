@@ -14,12 +14,18 @@
 
         <label for="username"><b>Login</b></label>
         <input id="username" type="text" placeholder="Enter Login" name="username" required>
+        <div class="alert" th:classappend="${loginExist}" style="display: none">
+            <strong>Error!</strong> Login already exist
+        </div>
 
         <label for="psw"><b>Password</b></label>
         <input id="psw" type="password" placeholder="Enter Password" name="psw" required>
 
         <label for="psw-repeat"><b>Repeat Password</b></label>
         <input id="psw-repeat" type="password" placeholder="Repeat Password" name="psw-repeat" required>
+        <div class="alert" th:classappend="${passwordIncorrect}" style="display: none">
+            <strong>Error!</strong> Your password and confirmation password do not match
+        </div>
         <hr>
 
         <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
@@ -27,7 +33,7 @@
     </div>
 
     <div class="container signin">
-        <p>Already have an account? <a href="#">Sign in</a>.</p>
+        <p>Already have an account? <a href="/app/login">Sign in</a>.</p>
     </div>
 </form>
 </body>

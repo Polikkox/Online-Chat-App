@@ -1,5 +1,11 @@
-form {
+body{
+    background-color: orange;
+}
+.form {
+    width: 80%;
+    margin: auto;
     border: 3px solid #f1f1f1;
+    background-color: white;
 }
 
 /* Full-width inputs */
@@ -70,4 +76,14 @@ span.psw {
     .cancelbtn {
         width: 100%;
     }
+}
+
+.alert {
+    padding: 20px;
+    background-color: green;
+    color: white;
+}
+
+.display{
+    display: block !important;
 }
