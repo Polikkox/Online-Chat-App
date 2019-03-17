@@ -101,8 +101,8 @@ function setConnected(connected) {
 }
 
 function sendMessage() {
-    stompClient.send("/backend-point/chat", {}, JSON.stringify({'message': $("#message").val()}));
-    $("#message").val("");
+    stompClient.send("/backend-point/chat", {}, JSON.stringify({'message': $("#message").html()}));
+    $("#message").html("");
 }
 
 function prepareAndHandleSession() {
@@ -171,14 +171,13 @@ function handleOnlineUsers(onlineUsers){
 }
 
 function sendPersonalMessage(message1){
-
     $("#send").unbind();
     $("#send").click(function() {
-        stompClient.send("/backend-point/personal-chat", {}, JSON.stringify({'from': message1, 'message': $("#message").val()}));
-        let mesg = {id: message1, from: "Me", message: $("#message").val()};
+        stompClient.send("/backend-point/personal-chat", {}, JSON.stringify({'from': message1, 'message': $("#message").html()}));
+        let mesg = {id: message1, from: "Me", message: $("#message").html()};
         addSelfSentMessageAfterSendingToAnotherUser(JSON.parse(JSON.stringify(mesg)));
         soundSendingMessage();
-        $("#message").val("");
+        $("#message").html("");
     });
 
 }
@@ -189,11 +188,11 @@ function sendMessageIfEnterPressed(user) {
     $(document).on('keypress',function(e) {
 
         if(e.which == 13) {
-            stompClient.send("/backend-point/personal-chat", {}, JSON.stringify({'from': user, 'message': $("#message").val()}));
-            let mesg = {id: user, from: "Me", message: $("#message").val()};
+            stompClient.send("/backend-point/personal-chat", {}, JSON.stringify({'from': user, 'message': $("#message").html()}));
+            let mesg = {id: user, from: "Me", message: $("#message").html()};
             addSelfSentMessageAfterSendingToAnotherUser(JSON.parse(JSON.stringify(mesg)));
             soundSendingMessage();
-            $("#message").val("")
+            $("#message").html("")
         }
     });
 }
@@ -296,7 +295,7 @@ function pushArchivedMessagesToConversation(message, client) {
 function disconnect() {
     $(".status-online").attr('class', 'status-offline');
     if (stompClient != null) {
-        stompClient.send("/backend-point/deleteUser", {}, JSON.stringify({'message': $("#message").val()}));
+        stompClient.send("/backend-point/deleteUser", {}, JSON.stringify({'message': $("#message").html()}));
         stompClient.disconnect();
     }
     setConnected(false);

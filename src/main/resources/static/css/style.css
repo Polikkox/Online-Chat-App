@@ -220,24 +220,25 @@ button:focus {
 .features{
     display: flex;
     justify-content: flex-start;
-    height: 30px;
+    height: 30px !important;
+    margin-top: -0.1vh;
 }
 
 .features-bold{
-    margin-left: 50px;
+    margin-left: 30px;
+    height: 30px !important;
 }
 
 .space-between{
     margin-right: 10px;
-    border: 2px solid steelblue;
-    width: 40px;
-    text-align: center;
-    background-color: steelblue;
 }
 .features-files{
     background-color: whitesmoke;
     border: none;
-    height: 30px;
+    height: 30px !important;
+}
+fieldset {
+    height: 30px !important;
 }
 #imgTest img{
     position: absolute;
@@ -251,3 +252,19 @@ button:focus {
     height: 30px;
     color: transparent;    /* Hides your "No File Selected" */
 }
+
+/*.editor1 {*/
+    /*border: 3px inset grey;*/
+    /*height: 100px;*/
+    /*width: 381px;*/
+    /*margin: 10px auto 0;*/
+/*}*/
+/*fieldset {*/
+    /*margin: 2px auto 15px;*/
+    /*width: 358px;*/
+/*}*/
+/*fieldset button {*/
+    /*width: 5ex;*/
+    /*text-align: center;*/
+    /*padding: 1px 3px;*/
+/*}*/
