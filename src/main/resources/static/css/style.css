@@ -65,7 +65,7 @@ body{
 }
 .text-area{
     display:block;
-    margin-top: -17px;
+    /*margin-top: -17px;*/
 }
 
 .send-button{
@@ -92,7 +92,7 @@ th{
 }
 
 .picture-area{
-    margin-top: 25px;
+    margin-top: 8px;
     width: 85vh;
     height: 20vh;
     border-left: 6px solid silver;
@@ -161,6 +161,7 @@ button:focus {
 
 .user-title{
     background-color: yellow;
+    width: 44vh;
 }
 
 .date{
@@ -169,11 +170,16 @@ button:focus {
 }
 .tr-user-message{
     height: 7vh !important;
+    font-size: 12px;
 
 }
-.tr-user-message td img{
-    width: 30% !important;
+.tr-user-message td img.pictures{
+    width: 30%;
     max-width: 40vh !important;
+}
+
+.tr-user-message td img{
+    width: 5%;
 }
 .online-status{
     margin-top: 3vh;
@@ -218,15 +224,18 @@ button:focus {
 }
 
 .features{
-    display: flex;
-    justify-content: flex-start;
+    display: flex !important;
+    justify-content: flex-start !important;
     height: 30px !important;
-    margin-top: -0.1vh;
+    margin-top: -0.1vh !important;
 }
 
 .features-bold{
     margin-left: 30px;
     height: 30px !important;
+}
+.emojionearea{
+    margin-left: 10px;
 }
 
 .space-between{
@@ -253,18 +262,5 @@ fieldset {
     color: transparent;    /* Hides your "No File Selected" */
 }
 
-/*.editor1 {*/
-    /*border: 3px inset grey;*/
-    /*height: 100px;*/
-    /*width: 381px;*/
-    /*margin: 10px auto 0;*/
-/*}*/
-/*fieldset {*/
-    /*margin: 2px auto 15px;*/
-    /*width: 358px;*/
-/*}*/
-/*fieldset button {*/
-    /*width: 5ex;*/
-    /*text-align: center;*/
-    /*padding: 1px 3px;*/
-/*}*/
+#editor{height:200px;margin:10px 0;padding:10px;font-size:14px;}
+#editor:focus{outline:none}

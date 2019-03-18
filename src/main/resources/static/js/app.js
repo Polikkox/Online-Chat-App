@@ -220,7 +220,8 @@ function addUsersOnlineDiv(onlineUsers) {
 
 function onFileUploadEvent(user) {
     $('#inputFileToLoad').removeAttr('disabled');
-    $("body").on('change', '#inputFileToLoad', function () {
+    $("body").on('change', '#inputFileToLoad', function (event) {
+        event.stopPropagation();
         encodeImageFileAsURL(user)
     })
 }
@@ -327,6 +328,7 @@ function encodeImageFileAsURL(address) {
             let srcData = fileLoadedEvent.target.result; // <--- data: base64
 
             let newImage = document.createElement('img');
+            newImage.className = "pictures";
             newImage.src = srcData;
 
             document.getElementById("imgTest").innerHTML = newImage.outerHTML;
@@ -344,7 +346,7 @@ function sendFile(file, address){
     $(".send-file").click(function() {
         stompClient.send("/backend-point/personal-chat", {}, JSON.stringify({'from': address, 'message': file}));
         let mesg = {id: address, from: "Me", message: file};
-        addSelfSentMessageAfterSendingToAnotherUser(JSON.parse(JSON.stringify(mesg)));// to check!!!
+        addSelfSentMessageAfterSendingToAnotherUser(JSON.parse(JSON.stringify(mesg)));
         soundSendingMessage();
         $("#imgTest").html("");
         file = "";
@@ -366,3 +368,4 @@ function sendFileIfEnterClicked(user, file) {
         }
     });
 }
+

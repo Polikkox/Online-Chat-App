@@ -10,6 +10,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <link href="../css/style.css" rel="stylesheet" type="text/css">
     <script src="../js/app.js"></script>
+    <script src="../js/execCommand.js"></script>
+    <script src="../js/emoji.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.1/emojionearea.min.css" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.1/emojionearea.min.js"></script>
 
 </head>
 <body>
@@ -80,15 +84,34 @@
             <form class="form-inline">
                 <div class="features">
                     <fieldset>
-                        <button class="features-bold space-between" onclick="document.execCommand( 'bold',false,null);" title="Bold Highlighted Text"><b>B</b>
+                        <button class="features-bold space-between" title="Bold Highlighted Text"><b>B</b>
                         </button>
-                        <button class="features-italic space-between" onclick="document.execCommand('italic',false,null);" title="Italicize Highlighted Text"><i>I</i>
+                        <button class="features-italic space-between" title="Italicize Highlighted Text"><i>I</i>
                         </button>
-                        <button class="features-underline space-between" onclick="document.execCommand( 'underline',false,null);"><u>U</u>
+                        <button class="features-underline space-between"><u>U</u>
                         </button>
-                        <button class="features-emoji space-between"><u>Emoji</u>
-                        </button>
+
+                        <label for="fontSize">Font Size: </label>
+                        <select id="fontSize" >
+                            <option value="8">8px</option>
+                            <option value="10">10px</option>
+                            <option value="12 selected='true'">12px</option>
+                            <option value="14">14px</option>
+                            <option value="20">20px</option>
+                            <option value="22">22px</option>
+                            <option value="30">30px</option>
+                            <option value="35">35px</option>
+                            <option value="40">40px</option>
+                            <option value="45">45px</option>
+                            <option value="50">50px</option>
+                        </select>
+                        <!--</div>-->
+
+                        <!--<button class="features-emoji space-between"><u>Emoji</u>-->
+                        <!--</button>-->
                     </fieldset>
+                    <div class="space-between features-emoji">
+                    </div>
                 </div>
             </form>
         </div>
@@ -105,8 +128,6 @@
             <form class="form-inline text-area">
                 <div class="form-group">
                     <div class="picture-area">
-                        <!--<label for="message"></label>-->
-                        <!--<textarea id="message" class="form-control"></textarea>-->
                         <div id="message" class="editor1 message form-control" contenteditable="true">
                         </div>
                         <div id="imgTest"></div>
