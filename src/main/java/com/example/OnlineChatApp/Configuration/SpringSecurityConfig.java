@@ -50,7 +50,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/app/login").permitAll()
+                .loginPage("/app/login")
                 .defaultSuccessUrl("/app/messenger", true)
                 .permitAll()
                 .and()

@@ -1,5 +1,6 @@
 package com.example.OnlineChatApp.Controller;
 
+import com.example.OnlineChatApp.Model.Message;
 import com.example.OnlineChatApp.Service.LoggedUserHandler;
 import com.example.OnlineChatApp.Service.Messenger;
 import org.springframework.beans.factory.annotation.Autowired;
