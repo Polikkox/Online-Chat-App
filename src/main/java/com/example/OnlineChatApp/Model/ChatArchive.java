@@ -1,6 +1,8 @@
 package com.example.OnlineChatApp.Model;
 
 
+import org.hibernate.annotations.Columns;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,6 +12,8 @@ public class ChatArchive {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long idChat;
 
+    @Lob
+    @Column
     private String message;
     private String login;
     private String sTime;

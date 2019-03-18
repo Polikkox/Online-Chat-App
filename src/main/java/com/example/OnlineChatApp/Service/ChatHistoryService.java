@@ -6,6 +6,8 @@ import com.example.OnlineChatApp.Repository.ChatArchiveRepository;
 import com.example.OnlineChatApp.Repository.ConversationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -23,7 +25,7 @@ public class ChatHistoryService {
         this.chatArchiveRepository = chatArchiveRepository;
         this.conversationRepository = conversationRepository;
     }
-
+    @Transactional
     public void archiveChatHistory(String client1, String client2, String message){
 
         Conversation conversation;
@@ -40,20 +42,14 @@ public class ChatHistoryService {
         }
 
         ChatArchive chat = new ChatArchive();
-        if(message.length() < 255){
-            chat.setMessage(message);
-        }
-        else{
-            chat.setMessage("img was here");
-        }
-
+        chat.setMessage(message);
         chat.setlogin(client1);
         chat.setTime(date());
         conversation.getChat().add(chat);
         this.conversationRepository.save(conversation);
     }
-
-    private Conversation getConversations(String client1, String client2){
+    @Transactional
+    public Conversation getConversations(String client1, String client2){
         return this.conversationRepository.findConversationByClient1AndClient2(client1, client2);
     }
 
@@ -68,7 +64,7 @@ public class ChatHistoryService {
         sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
         return sdf.format(date);
     }
-
+    @Transactional
     public List<ChatArchive> findArchivedChatHistory(String client1, String client2) {
         Conversation conversation = this.conversationRepository.findConversationByClient1AndClient2(client1, client2);
         if(conversation != null){
