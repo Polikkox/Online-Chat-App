@@ -188,11 +188,13 @@ function sendMessageIfEnterPressed(user) {
     $(document).on('keypress',function(e) {
 
         if(e.which == 13) {
+            e.preventDefault();
             stompClient.send("/backend-point/personal-chat", {}, JSON.stringify({'from': user, 'message': $("#message").html()}));
             let mesg = {id: user, from: "Me", message: $("#message").html()};
             addSelfSentMessageAfterSendingToAnotherUser(JSON.parse(JSON.stringify(mesg)));
             soundSendingMessage();
-            $("#message").html("")
+            $("#message").html("");
+
         }
     });
 }

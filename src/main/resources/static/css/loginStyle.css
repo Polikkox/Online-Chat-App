@@ -84,6 +84,12 @@ span.psw {
     color: white;
 }
 
+.fail {
+    padding: 20px;
+    background-color: red;
+    color: white;
+}
+
 .display{
     display: block !important;
 }

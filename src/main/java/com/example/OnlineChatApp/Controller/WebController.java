@@ -26,7 +26,6 @@ public class WebController {
         this.chatHistoryService = chatHistoryService;
     }
 
-
     @MessageMapping("/personal-chat")
     public void sendPersonalMessage(Message message, Principal principal){
         String secondPerson = message.getFrom();
@@ -39,8 +38,6 @@ public class WebController {
         this.messenger.pushInfoImpl("/subscription/" + sessionID, message1);
 
     }
-
-
 
 	@MessageMapping("/chat")
 	@SendTo("/subscription/room")
