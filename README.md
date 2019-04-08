@@ -9,10 +9,6 @@ library.
     <img src="https://i.imgur.com/Yy5cBxf.png">
   </a>
 
-## To-do
-- Logout function
-- Add emoji
-
 ## App is available online:
     https://gg-chat-mesenger.herokuapp.com/
     
