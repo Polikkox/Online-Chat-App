@@ -1,22 +1,13 @@
 package com.example.OnlineChatApp.Controller;
 
-import com.example.OnlineChatApp.Model.Message;
 import com.example.OnlineChatApp.Service.LoggedUserHandler;
 import com.example.OnlineChatApp.Service.Messenger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.context.request.*;
-
-import javax.servlet.annotation.WebListener;
-import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
-import java.util.Map;
 
 @Controller
 

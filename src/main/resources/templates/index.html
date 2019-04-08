@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Spring Boot WebSocket!</title>
     <meta charset="utf-8">
@@ -19,27 +19,34 @@
 <body>
 <div class="container testimonial-group">
     <div class="row first-row">
-        <div class="col-sm-5">
+        <div class="col-sm-4">
             <form class="form-inline form-size">
                 <div class="form-group">
                     <h3 id="hello-name"></h3>
                 </div>
             </form>
         </div>
-        <div class="col-sm-6 top-row">
+        <div class="col-sm-5 top-row">
             <div class="pull-right">
                 <form class="form-inline form-size">
                     <div class="form-group">
-                        <label  for="connect">Make Connection:</label>
+                        <label  for="connect"></label>
                         <button id="connect" class="btn btn-default" type="submit">Connect</button>
                         <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect</button>
                     </div>
                 </form>
             </div>
         </div>
-        <div class="col-sm-1 top-row">
+        <div class="col-sm-3 top-row form-inline">
             <div class="form-group online-status">
                 <span class="status-offline"></span>
+            </div>
+            <!--<a href="/logout" id="logout" class="pull-right btn btn-default" type="submit">Logout</a>-->
+            <div class="pull-right">
+                <a href="#" th:href="@{/logout}" id="logout"  class="btn info btn-md">
+                    <span class="glyphicon glyphicon-log-out">
+                    </span> Logout
+                </a>
             </div>
         </div>
     </div>
@@ -105,10 +112,6 @@
                             <option value="45">45px</option>
                             <option value="50">50px</option>
                         </select>
-                        <!--</div>-->
-
-                        <!--<button class="features-emoji space-between"><u>Emoji</u>-->
-                        <!--</button>-->
                     </fieldset>
                     <div class="space-between features-emoji">
                     </div>

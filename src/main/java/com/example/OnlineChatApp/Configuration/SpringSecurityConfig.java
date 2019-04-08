@@ -10,22 +10,23 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.sql.DataSource;
 
 @Configuration
-// Switch off the Spring Boot security configuration
-//@EnableWebSecurity
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private DataSource dataSource;
     private AccountDetailService accountDetailService;
+    private ObjectMapper objectMapper;
 
     @Autowired
-    public SpringSecurityConfig(BCryptPasswordEncoder bCryptPasswordEncoder, DataSource dataSource, AccountDetailService accountDetailService) {
+    public SpringSecurityConfig(BCryptPasswordEncoder bCryptPasswordEncoder, DataSource dataSource, AccountDetailService accountDetailService, ObjectMapper objectMapper) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.dataSource = dataSource;
         this.accountDetailService = accountDetailService;
+        this.objectMapper = objectMapper;
     }
 
     @Override
@@ -46,6 +47,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/images/**").permitAll()
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/app/sign-up").permitAll()
+                .antMatchers("/app/logout").permitAll()
                 .antMatchers("/js/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -53,6 +55,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/app/login")
                 .defaultSuccessUrl("/app/messenger", true)
                 .permitAll()
+                .and()
+                .logout()
+                .logoutSuccessUrl("/app/logout")
                 .and()
                 .csrf().disable()
                 .httpBasic();
